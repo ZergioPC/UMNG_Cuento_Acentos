@@ -1,11 +1,5 @@
 import { useState } from "react";
-import { REGIONS } from "../../db";
-
-const REGION_LABELS = {
-  paisa: "Paisa",
-  rolo: "Rolo",
-  costeño: "Costeño",
-};
+import { REGIONS, REGION_LABELS } from "../../db";
 
 const VIEW_ORDER = ["costeño", "rolo", "paisa"];
 

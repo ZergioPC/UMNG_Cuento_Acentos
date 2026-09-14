@@ -8,6 +8,12 @@ import cuento_7 from "./cuento_7.json";
 
 const REGIONS = ["paisa", "rolo", "costeño"];
 
+const REGION_LABELS = {
+  paisa: "Paisa",
+  rolo: "Rolo",
+  costeño: "Costeño",
+};
+
 function buildCuento(json) {
   return {
     id: json[0].title,
@@ -26,4 +32,4 @@ const CUENTOS = [
   cuento_7,
 ].map(buildCuento);
 
-export { CUENTOS, REGIONS };
+export { CUENTOS, REGIONS, REGION_LABELS };
