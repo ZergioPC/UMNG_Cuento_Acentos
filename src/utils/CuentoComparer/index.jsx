@@ -9,6 +9,48 @@ const REGION_LABELS = {
 
 const VIEW_ORDER = ["costeño", "rolo", "paisa"];
 
+const REGION_PALETTES = {
+  paisa: { background: "#fdf3d8", border: "#e6b800", color: "#5c4d00" },
+  rolo: { background: "#d9f2e4", border: "#28a745", color: "#0b3d1e" },
+  costeño: { background: "#fde2e2", border: "#dc3545", color: "#4a0d0d" },
+};
+
+function FraseComponent({ region, frase }) {
+  let icon = "";
+
+  switch (region) {
+    case VIEW_ORDER[0]:   // Costeño
+      icon = "🔴";
+      break;
+    case VIEW_ORDER[1]:   // Rolo
+      icon = "🟢";
+      break;
+    case VIEW_ORDER[2]:   // Paisa
+      icon = "🟡";
+      break;
+    default:
+      icon = "NN";
+      break;
+  }
+
+  const palette = REGION_PALETTES[region];
+
+  return (
+    <div
+      className="d-flex align-items-center gap-2 rounded-3 px-3 py-2 mb-2"
+      style={{
+        backgroundColor: palette.background,
+        border: `1px solid ${palette.border}`,
+      }}
+    >
+      <span>{icon}</span>
+      <p className="m-0" style={{ color: palette.color }}>
+        {frase}
+      </p>
+    </div>
+  );
+}
+
 function CuentoComparer({ cuento }) {
   const [visible, setVisible] = useState(
     Object.fromEntries(REGIONS.map((region) => [region, true]))
@@ -49,9 +91,7 @@ function CuentoComparer({ cuento }) {
             {VIEW_ORDER.map(
               (region) =>
                 visible[region] && (
-                  <p key={region} className="lh-base m-0">
-                    {frase.content[region]}
-                  </p>
+                  <FraseComponent key={region} region={region} frase={frase.content[region]} />
                 )
             )}
           </div>
