@@ -17,7 +17,12 @@ function SelectCuentoScene({ onSelect, onBack }) {
       <ul className="list-unstyled d-flex flex-column gap-3 align-items-center m-0">
         {CUENTOS.map((cuento) => (
           <li key={cuento.id}>
-            <BtnAnim size="lg" onClick={() => onSelect(cuento)}>
+            <BtnAnim 
+              size="lg" 
+              padding={10}
+              borderRadius={10}
+              onClick={() => onSelect(cuento)}
+            >
               {cuento.title}
             </BtnAnim>
           </li>

@@ -16,6 +16,8 @@ function CuentoReader({ cuento, region }) {
 
       <div className="d-flex justify-content-center gap-3 mb-4">
         <BtnAnim
+          padding={10}
+          borderRadius={10}
           onClick={() =>
             playSequence(
               cuento.folder,

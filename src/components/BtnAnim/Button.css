@@ -1,14 +1,5 @@
 .btn-blue {
-  --btn-color: #2bb0fd;
-  --btn-shadow-color: #1880d9;
-  --btn-w: 100px;
-  --btn-font: 18px;
-  --btn-shadow: 8px;
-  --btn-padding: 0;
-  --btn-radius: 28px;
-
-  width: var(--btn-w);
-  height: var(--btn-w);
+  height: auto;
 
   display: inline-flex;
   align-items: center;
@@ -33,6 +24,11 @@
 
   -webkit-tap-highlight-color: transparent;
   transition: all 0.1s ease;
+}
+
+.btn-blue--square {
+  height: var(--btn-w);
+  width: var(--btn-w);
 }
 
 .btn-blue svg {

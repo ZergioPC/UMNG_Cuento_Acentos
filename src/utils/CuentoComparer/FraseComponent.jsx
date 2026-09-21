@@ -20,6 +20,7 @@ function FraseComponent({ region, frase, audioUrl, isActive, onPlay }) {
           size="sm"
           shadowSize={6}
           borderRadius={16}
+          square={true}
           aria-label={`Escuchar la frase en ${region}`}
           onClick={() => onPlay(audioUrl)}
         >

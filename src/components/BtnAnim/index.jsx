@@ -28,6 +28,7 @@ function BtnAnim({
   children,
   type = "button",
   className = "",
+  square = false,
   ...rest
 }) {
   const buttonPx = typeof size === "number" ? size : SIZE_PRESETS[size] ?? 100;
@@ -37,7 +38,7 @@ function BtnAnim({
   return (
     <button
       type={type}
-      className={`btn-blue ${className}`.trim()}
+      className={`btn-blue ${square ? "btn-blue--square" : ""} ${className}`.trim()}
       style={{
         "--btn-color": color,
         "--btn-shadow-color": darken(color),
