@@ -1,7 +1,7 @@
 import { Button } from "../../components/AnimButton";
 import { REGION_PALETTES, REGION_ICONS } from "./constants";
 
-function FraseComponent({ region, frase }) {
+function FraseComponent({ region, frase, audioUrl, isActive, onPlay }) {
   const palette = REGION_PALETTES[region];
   const icon = REGION_ICONS[region] ?? "NN";
 
@@ -15,7 +15,13 @@ function FraseComponent({ region, frase }) {
     >
       <div className="col-auto d-flex flex-column align-items-center gap-2">
         <span aria-hidden="true">{icon}</span>
-        <Button size="sm" aria-label="Acción de la frase">🔊</Button>
+        <Button
+          size="sm"
+          aria-label={`Escuchar la frase en ${region}`}
+          onClick={() => onPlay(audioUrl)}
+        >
+          {isActive ? "⏹" : "🔊"}
+        </Button>
       </div>
       <div className="col">
         <p className="m-0" style={{ color: palette.color }}>
