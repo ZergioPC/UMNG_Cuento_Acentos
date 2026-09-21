@@ -1,57 +1,52 @@
-.btn {
-  --btn-size: 18px;
+.btn-blue {
+  --btn-color: #2bb0fd;
+  --btn-shadow-color: #1880d9;
+  --btn-w: 100px;
+  --btn-font: 18px;
+  --btn-shadow: 8px;
+  --btn-padding: 0;
+  --btn-radius: 28px;
+
+  width: var(--btn-w);
+  height: var(--btn-w);
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5em;
 
-  padding: 0.65em 1.5em;
+  padding: var(--btn-padding);
 
-  border: none;
-  border-radius: 999px;
-
-  background-color: #6d4a74;
+  background-color: var(--btn-color);
   color: #fff;
 
+  border: none;
+  border-radius: var(--btn-radius);
+  box-shadow: 0 var(--btn-shadow) 0 var(--btn-shadow-color);
+  cursor: pointer;
+  outline: none;
+
   font-family: inherit;
-  font-size: var(--btn-size);
+  font-size: var(--btn-font);
   font-weight: 500;
   line-height: 1;
 
-  cursor: pointer;
-
   -webkit-tap-highlight-color: transparent;
-  transition: filter 0.2s ease, transform 0.1s ease;
+  transition: all 0.1s ease;
 }
 
-.btn svg {
+.btn-blue svg {
   width: 1.2em;
   height: 1.2em;
   flex-shrink: 0;
 }
 
-.btn:hover {
-  filter: brightness(1.12);
+.btn-blue:active {
+  transform: translateY(calc(var(--btn-shadow) * 0.5));
+  box-shadow: 0 calc(var(--btn-shadow) * 0.5) 0 var(--btn-shadow-color);
 }
 
-.btn:active {
-  transform: scale(0.96);
-}
-
-.btn:focus-visible {
-  outline: 2px solid currentColor;
+.btn-blue:focus-visible {
+  outline: 2px solid #fff;
   outline-offset: 3px;
-}
-
-.btn--sm {
-  --btn-size: 14px;
-}
-
-.btn--md {
-  --btn-size: 18px;
-}
-
-.btn--lg {
-  --btn-size: 22px;
 }
