@@ -1,0 +1,26 @@
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+  cursor: pointer;
+  color: inherit;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.icon-btn svg {
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
+
+  fill: currentColor;
+  stroke: currentColor;
+
+  transition: color 0.2s ease;
+}
+
+.icon-btn:hover svg,
+.icon-btn:focus-visible svg {
+  color: var(--icon-hover-color, currentColor);
+}

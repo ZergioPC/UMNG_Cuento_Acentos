@@ -1,4 +1,4 @@
-import { ActionButton } from "./ActionButton";
+import { Button } from "../../components/AnimButton";
 import { REGION_PALETTES, REGION_ICONS } from "./constants";
 
 function FraseComponent({ region, frase }) {
@@ -15,7 +15,7 @@ function FraseComponent({ region, frase }) {
     >
       <div className="col-auto d-flex flex-column align-items-center gap-2">
         <span aria-hidden="true">{icon}</span>
-        <ActionButton />
+        <Button size="sm" aria-label="Acción de la frase">🔊</Button>
       </div>
       <div className="col">
         <p className="m-0" style={{ color: palette.color }}>
