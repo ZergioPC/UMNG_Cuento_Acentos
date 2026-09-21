@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { playSequence, stop, useAudioState } from "../audio";
-import { Button } from "../../components/AnimButton";
+import { BtnAnim } from "../../components/BtnAnim";
 
 function CuentoReader({ cuento, region }) {
   const { playing } = useAudioState();
@@ -15,7 +15,7 @@ function CuentoReader({ cuento, region }) {
       <h2 className="text-center mb-4">{cuento.title}</h2>
 
       <div className="d-flex justify-content-center gap-3 mb-4">
-        <Button
+        <BtnAnim
           onClick={() =>
             playSequence(
               cuento.folder,
@@ -25,11 +25,11 @@ function CuentoReader({ cuento, region }) {
           }
         >
           ▶ Escuchar
-        </Button>
+        </BtnAnim>
         {playing && (
-          <Button color="#e74c3c" onClick={stop}>
+          <BtnAnim color="#e74c3c" onClick={stop}>
             ⏹ Detener
-          </Button>
+          </BtnAnim>
         )}
       </div>
 

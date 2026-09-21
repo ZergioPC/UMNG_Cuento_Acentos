@@ -1,4 +1,4 @@
-import { Button } from "../../components/AnimButton";
+import { BtnAnim } from "../../components/BtnAnim";
 import { REGION_PALETTES, REGION_ICONS } from "./constants";
 
 function FraseComponent({ region, frase, audioUrl, isActive, onPlay }) {
@@ -15,7 +15,7 @@ function FraseComponent({ region, frase, audioUrl, isActive, onPlay }) {
     >
       <div className="col-auto d-flex flex-column align-items-center gap-2">
         <span aria-hidden="true">{icon}</span>
-        <Button
+        <BtnAnim
           color={palette.border}
           size="sm"
           shadowSize={6}
@@ -24,7 +24,7 @@ function FraseComponent({ region, frase, audioUrl, isActive, onPlay }) {
           onClick={() => onPlay(audioUrl)}
         >
           {isActive ? "⏹" : "🔊"}
-        </Button>
+        </BtnAnim>
       </div>
       <div className="col">
         <p className="m-0" style={{ color: palette.color }}>

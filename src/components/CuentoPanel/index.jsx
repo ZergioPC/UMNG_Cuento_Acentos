@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CuentoReader } from "../../utils/CuentoReader";
 import { CuentoComparer } from "../../utils/CuentoComparer";
 
-import { IconButton } from "../IconButton";
+import { BtnSimple } from "../BtnSimple";
 
 import ArrowBack from "../../assets/icons/ArrowBack";
 
@@ -52,9 +52,9 @@ function CuentoPanel({ cuento, region, onClose }) {
               ))}
             </div>
 
-            <IconButton icon={ArrowBack} onClick={onClose}>
+            <BtnSimple icon={ArrowBack} onClick={onClose}>
               Cerrar
-            </IconButton>
+            </BtnSimple>
           </div>
 
           <div className="flex-grow-1" style={{ overflowY: "auto", minHeight: 0 }}>

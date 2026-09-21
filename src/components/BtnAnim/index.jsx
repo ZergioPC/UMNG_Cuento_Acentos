@@ -18,7 +18,7 @@ function darken(hex, amount = 0.7) {
   return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
 }
 
-function Button({
+function BtnAnim({
   color = "#2bb0fd",
   size = "md",
   shadowSize = 8,
@@ -55,4 +55,4 @@ function Button({
   );
 }
 
-export { Button };
+export { BtnAnim };

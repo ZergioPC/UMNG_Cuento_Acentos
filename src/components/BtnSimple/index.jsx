@@ -1,6 +1,6 @@
-import "./IconButton.css";
+import "./BtnSimple.css";
 
-function IconButton({
+function BtnSimple({
   icon: Icon,
   hoverColor = "#fff",
   size = 24,
@@ -25,4 +25,4 @@ function IconButton({
   );
 }
 
-export { IconButton };
+export { BtnSimple };
