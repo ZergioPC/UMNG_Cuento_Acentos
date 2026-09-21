@@ -16,7 +16,10 @@ function FraseComponent({ region, frase, audioUrl, isActive, onPlay }) {
       <div className="col-auto d-flex flex-column align-items-center gap-2">
         <span aria-hidden="true">{icon}</span>
         <Button
+          color={palette.border}
           size="sm"
+          shadowSize={6}
+          borderRadius={16}
           aria-label={`Escuchar la frase en ${region}`}
           onClick={() => onPlay(audioUrl)}
         >

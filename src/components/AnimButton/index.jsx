@@ -1,6 +1,6 @@
 import "./Button.css";
 
-const SIZE_PRESETS = { sm: 80, md: 100, lg: 140 };
+const SIZE_PRESETS = { sm: 40, md: 80, lg: 140 };
 
 function darken(hex, amount = 0.7) {
   const clean = hex.replace("#", "");

@@ -2,6 +2,10 @@ import { useState } from "react";
 import { CuentoReader } from "../../utils/CuentoReader";
 import { CuentoComparer } from "../../utils/CuentoComparer";
 
+import { IconButton } from "../IconButton";
+
+import ArrowBack from "../../assets/icons/ArrowBack";
+
 const VIEWS = [
   { key: "lectura", label: "Cuento" },
   { key: "comparar", label: "Comparar" },
@@ -48,9 +52,9 @@ function CuentoPanel({ cuento, region, onClose }) {
               ))}
             </div>
 
-            <button className="btn btn-light" onClick={onClose}>
+            <IconButton icon={ArrowBack} onClick={onClose}>
               Cerrar
-            </button>
+            </IconButton>
           </div>
 
           <div className="flex-grow-1" style={{ overflowY: "auto", minHeight: 0 }}>
