@@ -1,0 +1,17 @@
+.pageflip-book {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 100dvh;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.book-page {
+  z-index: 0;
+  overflow: hidden;
+}
+
+.book-page > * {
+  overscroll-behavior: contain;
+}

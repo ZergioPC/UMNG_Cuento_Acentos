@@ -7,7 +7,7 @@ import ArrowBack from "../../assets/icons/ArrowBack";
 
 function SelectCuentoScene({ onSelect, onBack }) {
   return (
-    <section className="d-flex flex-column align-items-center gap-4 min-vh-100 p-3">
+    <section className="d-flex flex-column align-items-center gap-4 h-100 overflow-auto p-3">
       <BtnSimple icon={ArrowBack} onClick={onBack}>
         Volver
       </BtnSimple>
