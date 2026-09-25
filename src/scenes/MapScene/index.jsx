@@ -1,11 +1,7 @@
-import { useState } from "react";
 import { REGIONS } from "../../db";
 import { InteractiveMap } from "../../components/InteractiveMap";
-import { CuentoPanel } from "../../components/CuentoPanel";
 
-function MapScene({ cuento, onBack }) {
-  const [region, setRegion] = useState(null);
-
+function MapScene({ cuento, region, onSelectRegion, onBack }) {
   return (
     <section className="d-flex flex-column align-items-center gap-4 min-vh-100 p-3">
       <button className="btn btn-light align-self-start" onClick={onBack}>
@@ -17,22 +13,12 @@ function MapScene({ cuento, onBack }) {
       <InteractiveMap
         regions={REGIONS}
         activeRegion={region}
-        onSelectRegion={setRegion}
+        onSelectRegion={onSelectRegion}
       />
 
-      {region === null && (
-        <p className="text-center m-0">
-          Toca una región del mapa para leer el cuento o compararlo.
-        </p>
-      )}
-
-      {region !== null && (
-        <CuentoPanel
-          cuento={cuento}
-          region={region}
-          onClose={() => setRegion(null)}
-        />
-      )}
+      <p className="text-center m-0">
+        Toca una región del mapa para leer el cuento o compararlo.
+      </p>
     </section>
   );
 }

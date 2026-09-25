@@ -4,10 +4,12 @@ import "./App.css";
 import { HomeScene } from "./scenes/HomeScene";
 import { SelectCuentoScene } from "./scenes/SelectCuentoScene";
 import { MapScene } from "./scenes/MapScene";
+import { CuentoScene } from "./scenes/CuentoScene";
 
 function App() {
   const [scene, setScene] = useState("home");
   const [cuento, setCuento] = useState(null);
+  const [region, setRegion] = useState(null);
 
   function handleStart() {
     setScene("select");
@@ -15,7 +17,13 @@ function App() {
 
   function handlePickCuento(cuento) {
     setCuento(cuento);
+    setRegion(null);
     setScene("mapa");
+  }
+
+  function handleSelectRegion(region) {
+    setRegion(region);
+    setScene("cuento");
   }
 
   return (
@@ -32,7 +40,17 @@ function App() {
       {scene === "mapa" && (
         <MapScene
           cuento={cuento}
+          region={region}
+          onSelectRegion={handleSelectRegion}
           onBack={() => setScene("select")}
+        />
+      )}
+
+      {scene === "cuento" && (
+        <CuentoScene
+          cuento={cuento}
+          region={region}
+          onBack={() => setScene("mapa")}
         />
       )}
     </>

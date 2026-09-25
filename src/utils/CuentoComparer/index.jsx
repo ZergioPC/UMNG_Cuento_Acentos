@@ -16,7 +16,7 @@ function CuentoComparer({ cuento }) {
 
   return (
     <article
-      className="w-100 p-4 rounded-4 bg-white bg-opacity-10"
+      className="w-100 mx-auto p-4 rounded-4 bg-white bg-opacity-10"
       style={{ maxWidth: 720 }}
     >
       <h2 className="text-center mb-4">{cuento.title}</h2>
