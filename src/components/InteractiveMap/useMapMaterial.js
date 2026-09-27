@@ -2,19 +2,17 @@ import { useLayoutEffect } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-import { patchToonLight } from "./toonLight";
-import { TEXTURE, TOON } from "./constants";
+import { TEXTURE } from "./constants";
 
 // El GLB no trae texturas (0 imágenes en el glTF.json) y sí trae un material
 // por malla, con emissiveFactor igual al baseColorFactor: reutilizarlo
 // sumaría luz sobre la textura y la lavaría. Por eso cada malla recibe un
 // MeshStandardMaterial nuevo, con su PNG.
 //
-// Sobre ese material se hace el toon de dos maneras baratas y reversibles
-// desde constantes:
-//   - la misma textura también como emissiveMap, a intensidad baja, para que
-//     el mapa se lea como tinta iluminada por dentro;
-//   - onBeforeCompile cuantiza la luz directa en bandas planas (toonLight.js).
+// El material es un MeshStandardMaterial normal, sin parche de shader: la
+// región se ve con la luz difusa de la escena y la misma textura como
+// emissiveMap a intensidad 1 (TEXTURE.emissive), que es lo que la hace leerse
+// como tinta plana en vez de foto. No hay cuantizado de luz.
 function useMapMaterial(object, texture, { cast = true, receive = true } = {}) {
   const gl = useThree((state) => state.gl);
 
@@ -39,11 +37,6 @@ function useMapMaterial(object, texture, { cast = true, receive = true } = {}) {
       emissiveMap: texture,
       emissiveIntensity: TEXTURE.emissive.intensity,
     });
-
-    // El material sigue siendo un MeshStandardMaterial: lo que cambia es que
-    // la luz directa entra cuantizada. Se compila una sola vez por tipo de
-    // material porque el parche es el mismo para todas las mallas.
-    material.onBeforeCompile = (shader) => patchToonLight(shader, TOON);
 
     object.material = material;
     object.castShadow = cast;

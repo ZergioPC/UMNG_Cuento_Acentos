@@ -21,43 +21,45 @@ export const BASE_MESHES = [
 // todavía no tiene frases, así que el clic no navega. Si `regions` no trae
 // la key, la región cae en ese mismo caso.
 // `outline` es el color del borde toon que se dibuja sobre la cara superior de
-// la región: un tono saturado de su propio color de mapa, para que la línea se
-// lea como tinta política y no como otra sombra.
+// la región. Va en un solo valor compartido porque es el mismo para las cinco:
+// duplicado cinco veces se desincroniza en cuanto alguien cambia uno.
+const OUTLINE_COLOR = "#000000";
+
 export const REGION_MESHES = [
   {
     name: "Caribe",
     key: "costeño",
     label: "Costeño",
     texture: caribeUrl,
-    outline: "#FFB703",
+    outline: OUTLINE_COLOR,
   },
   {
     name: "Andes",
     key: "paisa",
     label: "Paisa",
     texture: andinaUrl,
-    outline: "#D62828",
+    outline: OUTLINE_COLOR,
   },
   {
     name: "Orinoquia",
     key: "rolo",
     label: "Rolo",
     texture: orinquiaUrl,
-    outline: "#6BA822",
+    outline: OUTLINE_COLOR,
   },
   {
     name: "Amazonia",
     key: null,
     label: "Amazonia",
     texture: amazioniaUrl,
-    outline: "#157F5F",
+    outline: OUTLINE_COLOR,
   },
   {
     name: "Pacifico",
     key: null,
     label: "Pacífico",
     texture: pacificoUrl,
-    outline: "#1D7FB8",
+    outline: OUTLINE_COLOR,
   },
 ];
 
@@ -147,7 +149,8 @@ const CLOUDS_DEPTH = 40;
 
 export const CLOUDS = {
   // Cuántas hay. Pocas a propósito: con muchas se vuelven ruido de fondo y
-  // roban atención al mapa.
+  // roban atención al mapa. Con 15 el fondo se ve poblado en el encuadre de
+  // escritorio sin que se lean como manchas.
   count: 15,
   // Altura sobre el suelo. Con el pitch a 45° y fov 45, un punto de altura y a
   // distancia horizontal hd de la cámara está en cuadro si
@@ -155,16 +158,21 @@ export const CLOUDS = {
   // porque el eje de vista entra a hd = H (mira un punto del suelo), así que
   // lo que está más lejos que el centro sale en la parte alta de la pantalla.
   // Medido con height y area como están: en el encuadre de un celular (d 12.7)
-  // entran las 5 nubes entre el 77% y el 98% de la altura, con el borde lejano
+  // las nubes entran entre el 77% y el 98% de la altura, con el borde lejano
   // del mapa en el 70%; en uno de escritorio (d 5.9) el mapa llena el cuadro y
-  // solo se asoma una; con la cámara en minDistance (4.5) no se ve ninguna.
+  // solo se asoman las del fondo; con la cámara en minDistance (4.5) no se ve
+  // ninguna. Ojo: el rectángulo de deriva se centra en CLOUDS_EDGE, así que
+  // también cubre CLOUDS_DEPTH/2 unidades hacia la cámara; esas no se ven
+  // porque quedan fuera del cono (hd < H) y por eso el area no necesita
+  // sesgarse hacia atrás, pero si se sube `depth` hay que revisar el
+  // solapamiento con la isla.
   height: { min: 0.9, max: 2.6 },
   size: { min: 1.4, max: 3.2 },
   // Ancho entre alto del quad. Las nubes se dibujan acostadas, como en un
   // dibujo a mano.
   aspect: 2.4,
-  // Deriva en X dentro de un rectángulo que arranca en CLOUDS_EDGE (detrás del
-  // modelo) y se extiende CLOUDS_DEPTH hacia el fondo.
+  // Deriva en X dentro de un rectángulo de CLOUDS_EDGE (detrás del modelo) de
+  // CLOUDS_DEPTH de profundidad, centrado en esa misma arista.
   area: { x: 9, z: CLOUDS_DEPTH, centerZ: CLOUDS_EDGE },
   // Unidades de mundo por segundo.
   speed: { min: 0.12, max: 0.3 },
@@ -177,9 +185,9 @@ export const CLOUDS = {
   // Semilla del PRNG que reparte las posiciones: fija para que las nubes
   // salgan siempre en el mismo sitio al remontar el canvas (PageFlip los
   // desmonta y los vuelve a montar al volver a la página del mapa). El valor
-  // está elegido a ojo: con esta semilla las 5 nubes entran en cuadro en el
-  // encuadre de celular y quedan repartidas en X (si se cambia, hay que volver
-  // a mirar cuántas se ven, ver la fórmula de arriba).
+  // está elegido a ojo: con esta semilla las nubes del fondo entran en cuadro
+  // en el encuadre de celular y quedan repartidas en X (si se cambia, hay que
+  // volver a mirar cuántas se ven, ver la fórmula de arriba).
   seed: 1029,
 };
 
@@ -204,30 +212,21 @@ export const TEXTURE = {
   roughness: 0.85,
   metalness: 0,
   anisotropy: 4,
-  // La misma textura también como emissiveMap: es lo que hace que el mapa se
-  // lea como tinta iluminada por dentro y no como una foto. La intensidad es
-  // baja a propósito, por encima de ~0.3 la sombra de los slabs se lava y el
-  // mapa deja de leerse como volumen.
-  emissive: { color: "#ffffff", intensity: 0.22 },
+  // La misma textura también como emissiveMap, y es el canal que dibuja la
+  // región: el material se ilumina por dentro con su propio color, sin
+  // cuantizar la luz (no hay parche toon, ver más abajo). Con intensidad 1 el
+  // emissiveMap entrega el color de la textura tal cual; la luz directa solo
+  // suma encima, así que las zonas claras pueden pasar de 1 y las comprime el
+  // tone mapping ACES de R3F.
+  emissive: { color: "#ffffff", intensity: 1 },
 };
 
-// Estética toon de la escena (ver toonLight.js). El material sigue siendo un
-// MeshStandardMaterial: lo que cambia es que la luz directa se cuantiza en
-// escalones planos en vez de un degradado continuo.
-export const TOON = {
-  // Cuántas bandas de luz. Con 1 (o menos) el parche no se aplica y el
-  // material queda como un MeshStandardMaterial normal.
-  bands: 3,
-  // Suavizado del borde de cada banda en píxeles: 0 es un escalón duro
-  // (aliaseado) y 1 lo deja de ancho un píxel.
-  edgeSoftness: 0.5,
-};
-
-// Borde toon de cada región: una línea de su propio color alrededor de la
-// cara superior (ver regionOutline.js y RegionMesh.jsx).
+// Borde toon de cada región: una línea alrededor de la cara superior (ver
+// regionOutline.js y RegionMesh.jsx). El color no vive aquí sino en
+// REGION_MESHES[].outline, que hoy es el mismo negro para las cinco.
 export const OUTLINE = {
   // Grosor en píxeles (Line2 los cuenta en pantalla, no en unidades de mundo).
-  lineWidth: 2.5,
+  lineWidth: 1.5,
   // Ángulo de dihedral mínimo (grados) para que una arista sea borde. Con 25
   // solo entran los quiebres de verdad: la costa, el bisel y las paredes del
   // slab. Las aristas coplanares del interior de la cara se descartan solas.
@@ -236,7 +235,13 @@ export const OUTLINE = {
   // la cara superior. La costa del GLB cae en el 96.8% del grosor, así que
   // 0.15 deja margen sin empezar a comerse el bisel inferior.
   band: 0.15,
-  opacity: 1,
+  // Suavizado Douglas-Peucker del borde, como fracción de la diagonal de la
+  // región. La costa trae ~470 aristas de ~1 px con un serrucho del orden del
+  // grosor del trazo, y a esa escala el borde se lee como turbulencia en vez
+  // de como línea (se reportó como "ruido" del color del borde). Esto se queda
+  // con los accidentes grandes de la costa. Poner 0 deja el borde crudo.
+  smooth: 0.003,
+  opacity: 0.5,
 };
 
 export const ANIM = {
