@@ -1,9 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
+import { Line } from "@react-three/drei";
 
 import { useMapMaterial } from "./useMapMaterial";
 import { useReducedMotion } from "./useReducedMotion";
-import { ANIM, CONTROLS } from "./constants";
+import { topContour } from "./regionOutline";
+import { ANIM, CONTROLS, OUTLINE } from "./constants";
+
+// El borde no debe participar en el raycast: R3F recorre los hijos del mesh
+// con handlers, y la línea (con sus ~500 segmentos) solo se sumaría al costo
+// del puntero. Además así el clic siempre lo recibe el slab, no la línea.
+const ignoreRaycast = () => null;
 
 // Una región del mapa. Es un slab extruido en el GLB: se lo anima en Y
 // sumando una oscilación de reposo y un resorte que responde al hover y al
@@ -17,6 +24,7 @@ import { ANIM, CONTROLS } from "./constants";
 //   regionKey clave dentro de cuento.frases[].content, o null si aún no hay
 //             frases para esta región
 //   index     posición en REGION_MESHES, desfasa la oscilación
+//   color     color del borde toon (REGION_MESHES.outline)
 //   isActive  la región ya elegida en este cuento
 //   rig       estado de useFlightCamera, para no tomar un arrastre por clic
 //   onSelect  (regionKey, label) al picar, con el rebote ya lanzado
@@ -27,6 +35,7 @@ function RegionMesh({
   label,
   regionKey,
   index,
+  color,
   isActive,
   rig,
   onSelect,
@@ -49,6 +58,11 @@ function RegionMesh({
     }),
     [object]
   );
+
+  // El contorno va en el espacio local de la región, así que la línea hereda
+  // la transformación del nodo y sube y baja con el resorte sin sincronizar
+  // nada. Es un solo cálculo por montaje: la geometría del GLB no cambia.
+  const contour = useMemo(() => topContour(object.geometry), [object]);
 
   useMapMaterial(object, texture);
 
@@ -135,7 +149,26 @@ function RegionMesh({
       onPointerOver={handlePointerOver}
       onPointerOut={handlePointerOut}
       onClick={handleClick}
-    />
+    >
+      {contour !== null && (
+        // depthTest fuera a propósito: las regiones son contiguas y comparten
+        // la costa, así que dos bordes de colores distintos quedan a la misma
+        // profundidad y se pisarían. Con renderOrder escalonado por índice el
+        // desempate es determinista y no hace falta nada de polygonOffset ni
+        // levantar la línea.
+        <Line
+          segments
+          points={contour}
+          color={color}
+          lineWidth={OUTLINE.lineWidth}
+          opacity={OUTLINE.opacity}
+          transparent={OUTLINE.opacity < 1}
+          depthTest={false}
+          renderOrder={20 + index}
+          raycast={ignoreRaycast}
+        />
+      )}
+    </primitive>
   );
 }
 

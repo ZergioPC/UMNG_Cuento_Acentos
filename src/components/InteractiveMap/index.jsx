@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { useGLTF, useTexture } from "@react-three/drei";
 
 import { BaseMesh } from "./BaseMesh";
+import { Clouds } from "./Clouds";
 import { RegionMesh } from "./RegionMesh";
 import { WaterBackground } from "./WaterBackground";
 import { useFlightCamera } from "./useFlightCamera";
@@ -54,6 +55,9 @@ function useMapNodes() {
           name: mesh.name,
           label: mesh.label ?? mesh.name,
           key: mesh.key ?? null,
+          // Color del borde toon. Las bases no lo usan: solo hay una línea
+          // para las regiones.
+          color: mesh.outline,
           texture: byName.get(mesh.name),
           object: scene.getObjectByName(mesh.name)?.clone() ?? null,
         }))
@@ -91,6 +95,10 @@ function MapContents({ regions, activeRegion, onSelect, onHover }) {
           resuelve la profundidad, porque el plano está más abajo. */}
       <WaterBackground bases={bases} />
 
+      {/* Las nubes también quedan de fondo: van detrás de la costa, así que el
+          depth buffer del mapa las tapa cuando pasan por detrás de la isla. */}
+      <Clouds />
+
       {bases.map((node) => (
         <BaseMesh key={node.name} object={node.object} texture={node.texture} />
       ))}
@@ -105,6 +113,9 @@ function MapContents({ regions, activeRegion, onSelect, onHover }) {
           // frases para la región o el cuento no la trae en `regions`.
           regionKey={regions.includes(node.key) ? node.key : null}
           index={index}
+          // El borde toon de la región (regionOutline.js), con el color que
+          // vive en REGION_MESHES.outline.
+          color={node.color}
           // El node.key null también hace de "nada elegido": sin esta guarda
           // Amazonia salía en alto como activa con region === null.
           isActive={node.key !== null && activeRegion === node.key}

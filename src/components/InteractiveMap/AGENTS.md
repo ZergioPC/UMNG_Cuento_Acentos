@@ -5,7 +5,7 @@
 El mapa 3D es una escena de React Three Fiber (R3F) que muestra Colombia dividida en regiones. La navegación ocurre por **PageFlipBook** (página "hard", ver App.jsx:21). 
 
 - **MapScene (src/scenes/MapScene/index.jsx)**: wrapper que lazy-carga `InteractiveMap` (chunk separado para Three/Drei). Recibe `cuento`, `region`, `onSelectRegion`, `onBack`. No renderiza si `cuento` es null.
-- **InteractiveMap (src/components/InteractiveMap/index.jsx)**: monta `<Canvas>` con cámara orto-perspectiva fija, gestos (arrastre/rueda/teclado), vuelo suave (spring), fondo de mar con shader cartoon, resaltado/animación por región y un HUD con pistas ("Arrastra para mover · rueda para acercar...").
+- **InteractiveMap (src/components/InteractiveMap/index.jsx)**: monta `<Canvas>` con cámara orto-perspectiva fija, gestos (arrastre/rueda/teclado), vuelo suave (spring), fondo de mar con shader cartoon, unas pocas nubes con shader propio, luz toon y bordes de color por región, resaltado/animación por región y un HUD con pistas ("Arrastra para mover · rueda para acercar...").
 - Modelo: `src/assets/mapa3d/regiones_colombia.glb`. Texturas PNG por región/ bases. El mapa se ve como una isla sobre un plano de mar (shader propio).
 
 ## 2. Arquitectura y responsabilidades
@@ -14,11 +14,15 @@ El mapa 3D es una escena de React Three Fiber (R3F) que muestra Colombia dividid
 |---|---|
 | `MapScene/index.jsx` | UI overlay (barra superior con botón atrás + título del cuento). Lazy-load de InteractiveMap. |
 | `InteractiveMap/index.jsx` | Orquestación: Canvas, estado de hover/notice, detección pointer/coarse/reduced-motion, control de `frameloop` (pause cuando canvas no visible). Exporta `InteractiveMap`. |
-| `constants.js` | Config única: URLs (GLB+PNG), `BASE_MESHES`, `REGION_MESHES`, `MESHES`, `CAMERA`, `WORLD`, `CONTROLS`, `TEXTURE`, `ANIM`, `LIGHT`, `SOON_LABEL`. |
+| `constants.js` | Config única: URLs (GLB+PNG), `BASE_MESHES`, `REGION_MESHES`, `MESHES`, `CAMERA`, `WORLD`, `CLOUDS`, `CONTROLS`, `TEXTURE`, `TOON`, `OUTLINE`, `ANIM`, `LIGHT`, `SOON_LABEL`. |
 | `useMapNodes.js` (implícito en index.jsx:39-65) | Carga GLB (`useGLTF`) + texturas (`useTexture`) en orden `MESHES`. Clona nodos (`scene.getObjectByName(...).clone()`) para no mutar cache GLTF (evita que animaciones afecten siguiente montaje). Agrupa `bases` y `regions`. |
 | `BaseMesh.jsx` | Suelo/mundo (no interactivo). Aplica material con `cast=false`, `receive=true`. |
-| `RegionMesh.jsx` | Región interactiva: anima Y (oscilación idle + resorte 2º orden), maneja hover/click, aplica salto (`jumpImpulse`) al seleccionar, cursor pointer solo si `regionKey != null`. |
-| `useMapMaterial.js` | Crea `MeshStandardMaterial` nuevo por malla (GLB trae emissiveFactor que lavaría textura) con `anisotropy` limitado por GPU. Dispone material al cleanup. |
+| `RegionMesh.jsx` | Región interactiva: anima Y (oscilación idle + resorte 2º orden), maneja hover/click, aplica salto (`jumpImpulse`) al seleccionar, cursor pointer solo si `regionKey != null`, y monta el borde toon (`<Line segments>` de drei) como hijo del nodo. |
+| `useMapMaterial.js` | Crea `MeshStandardMaterial` nuevo por malla (GLB trae emissiveFactor que lavaría textura) con `anisotropy` limitado por GPU. Además usa la misma textura como `emissiveMap` (intensidad baja) y parchea el shader con `onBeforeCompile` para cuantizar la luz. Dispone material al cleanup. |
+| `toonLight.js` | GLSL plano del parche toon: cuantiza `reflectedLight.directDiffuse` en bandas planas justo antes del difuso total, con el borde de cada banda suavizado un píxel con `fwidth`. Sin uniforms (`bands` va como literal). |
+| `regionOutline.js` | Matemática pura del borde: `EdgesGeometry` con umbral de ángulo + filtro por banda de altura → `Array` plano de coordenadas con el contorno de la cara superior de un slab (así lo exige el `<Line segments>` de drei). Sin React. |
+| `Clouds.jsx` | Nubes de fondo: `CLOUDS.count` quads con `ShaderMaterial` propio, pre-rotados de cara a la cámara (pitch fijo) y arrastrados en X por detrás de la isla. Posiciones con PRNG sembrado, `uTime` acumulado a mano, congelado con reduced-motion. |
+| `cloudShader.js` | GLSL de las nubes: silueta por distancia con signo (tres lóbulos con base plana) mordida por noise de valor, recorte con `fwidth`, dos tonos cuantizados. Sin texturas ni CDN. |
 | `WaterBackground.jsx` | Mar de fondo: plano grande bajo la base del GLB con `ShaderMaterial` propio. Saca el nivel del agua del `Box3` real de las bases, acumula `uTime` a mano y se congela con reduced-motion. |
 | `waterShader.js` | GLSL del mar cartoon: bandas planas de oleaje, espuma por umbral, rompientes en la costa y destellos. Sin texturas ni dependencias. |
 | `useFlightCamera.js` | Rig de cámara "orbital sobre suelo": mira punto `(x,z)` en `groundY`, altura = `distance*sin(pitch)`, detrás = `distance*cos(pitch)`. Control: drag (proyecta sobre plano Y=0), wheel (zoom clamp), teclado (WASD/flechas), suavizado exponencial. |
@@ -68,7 +72,7 @@ El mapa 3D es una escena de React Three Fiber (R3F) que muestra Colombia dividid
 - HUD burbuja (`.imap__bubble`): muestra `notice` (timeout 2600ms para "Próximamente"), o `hoverInfo`, o hint por dispositivo. `pointer-events:none` para no robar gestos.
 - Cursor: pointer solo regiones con `regionKey!=null` y hovered.
 - Focus: canvas `tabIndex=0` + outline visible `:focus-visible` para accesibilidad teclado.
-- El mar también se detiene con `frameloop="never"` (su `uTime` solo avanza en `useFrame`) y con `prefers-reduced-motion` queda congelado. No recibe puntero (sin handlers, R3F ni lo raycastea) ni sombras (ShaderMaterial sin luces).
+- El mar también se detiene con `frameloop="never"` (su `uTime` solo avanza en `useFrame`) y con `prefers-reduced-motion` queda congelado. Las nubes usan el mismo patrón. Ni el mar ni las nubes reciben puntero (sin handlers, R3F no los raycastea) ni sombras (ShaderMaterial sin luces). El borde toon tampoco se raycastea (`raycast={() => null}`).
 
 ## 8. Cómo aplicar cambios (guía para agente IA)
 
@@ -143,6 +147,36 @@ Sombras: `LIGHT.shadow` + `castShadow/receiveShadow`. Bias negativo para evitar 
 - `uTime` lo avanza `WaterBackground` sumando `delta` con clamp, nunca `state.clock` (mismo motivo que en RegionMesh: el reloj se reinicia al pausar el `frameloop`).
 - El nivel del agua se deriva del `Box3` de las bases, no de una constante: si el slab del GLB cambia de grosor, el mar sigue quedando debajo sin tocar código.
 
+### I. Estética toon (luz, bordes y nubes)
+
+Tres palancas independientes, todas en `constants.js`:
+
+**1. Luz toon — `TOON` (`bands`, `edgeSoftness`) + `TEXTURE.emissive`.**
+`useMapMaterial` sigue creando un `MeshStandardMaterial` (no se cambió de material: se perderían sombras y el resto del pipeline estándar) y le añade dos cosas:
+- `emissiveMap` = la misma textura que `map`, con `emissive` blanco y `emissiveIntensity` baja. Por encima de ~0.3 la sombra de los slabs se lava y el mapa deja de leerse como volumen.
+- `material.onBeforeCompile = (shader) => patchToonLight(shader, TOON)`, que reemplaza `#include <lights_fragment_end>` (r186, línea ~192 de `meshphysical.glsl.js`) por un bloque que cuantiza `reflectedLight.directDiffuse`. Reglas del parche:
+  - Se toca **solo** `directDiffuse` (luz directa, con la sombra ya aplicada). `indirectDiffuse` (ambiente) y la emisión entran después: cuantizarlas deja las caras planas y la sombra parece un agujero.
+  - El cuantizado reescala el color por `paso / luma` en vez de mezclarlo con gris, así cada banda conserva el tono de la textura.
+  - `bands` y `edgeSoftness` van como **literales** del template, no como uniforms: son constantes de módulo. Si algún día se animan hay que pasarlos a uniform y fijar `material.customProgramCacheKey()`, porque la clave de caché del programa es el código de `onBeforeCompile`.
+  - `bands <= 1` no parchea nada (el material queda estándar).
+  - El punto de parche es interno de three: si sube de versión, hay que volver a verificar que `#include <lights_fragment_end>` siga existiendo en `meshphysical`.
+
+**2. Bordes por región — `OUTLINE` + `REGION_MESHES[].outline`.**
+`regionOutline.js` (matemática pura) saca el contorno de la cara superior: `EdgesGeometry(geom, threshold)` entrega solo los quiebres de verdad (las aristas coplanares del interior de la cara tienen 0° y se descartan solas) y después se filtra por banda de altura (`band`, fracción del grosor del slab). Datos medidos del GLB que explican los valores por defecto: la cara de arriba es plana en el 100% del grosor, la costa cae en el 96.8% (de ahí `band: 0.15`), y con `threshold: 25` salen ~300-520 segmentos por región, casi ninguno paralelo a los ejes (o sea, costa suave, no escalera). Detalles que no se pueden tocar a la ligera:
+- El GLB viene con vértices partidos (normales planas por cara), pero `EdgesGeometry` empareja por **posición hasheada**, no por índice: por eso no hace falta `mergeVertices` (que además rompería las normales del modelo).
+- `RegionMesh` monta `<Line segments>` de drei **como hijo del `<primitive>`**, así la línea hereda la transformación del nodo y sube y baja con el resorte sin sincronizar nada. No usar `<Edges geometry={...}>`: recalcularía la geometría y descartaría el filtro.
+- `depthTest={false}` + `renderOrder={20 + index}` a propósito: las regiones son contiguas, sus costes comparten la misma Y y con depth test los dos colores se pisarían (z-fighting). Con `renderOrder` el desempate es determinista y no hace falta `polygonOffset` ni levantar la línea.
+- `raycast={() => null}` (función, **no** `null`): R3F recorre recursivamente los hijos del mesh con handlers, y sin esto la línea se sumaría al costo del puntero y hasta podría robarle el clic al slab. Poner `raycast={null}` revienta `Raycaster.intersectObject`.
+
+**3. Nubes — `CLOUDS` + `Clouds.jsx` + `cloudShader.js`.**
+`CLOUDS` es la palanca de todo: `count`, `height`, `size`, `aspect`, `area` (rectángulo de deriva), `speed`, `top`/`bottom`, `bands`, `opacity`, `seed`. No se usa el `<Cloud>` de drei porque su textura por defecto es un CDN. Reglas del componente/shader:
+- La banda en Z arranca en `CLOUDS_EDGE = WORLD.model.minZ - 0.04`, o sea justo detrás del modelo: la nube más cercana nunca se monta sobre el mapa, y como además va por detrás, el depth buffer del modelo la tapa si algún frame se cruza. Material con `depthWrite: false` + `depthTest: true`.
+- **Dónde se ven depende del zoom, y hay que saber la fórmula antes de tocar `height`/`area`**: con el pitch a 45° y fov 45, un punto de altura `y` a distancia horizontal `hd` de la cámara (con `H = distancia·sin45`) está en cuadro si `(H - y)*0.41 <= hd <= (H - y)*2.41`. El eje de vista entra al suelo a `hd = H`, así que lo que está más lejos del punto que mira la cámara sale en la parte alta de la pantalla. Medido con los valores actuales: en el encuadre de celular (`fitDistance` 12.7) entran las 5 nubes entre el 77% y el 98% de la altura de pantalla, con el borde lejano del mapa en el 70%; en uno de escritorio (5.9) el mapa llena el cuadro y solo se asoma una; en `minDistance` (4.5) no se ve ninguna. Si se cambia `CLOUDS.seed` hay que volver a contar cuántas entran.
+- El pitch de la cámara es fijo (`CAMERA.pitch`), así que los quads se pre-rotan con `rotation-x = -CAMERA.pitch` y no hay billboarding por frame.
+- La deriva se mueve **en el quad** (posición X con wrap por `mod` en `useFrame`), no dentro del shader: así dos nubes se cruzan de verdad en vez de deformarse juntas.
+- Posiciones con `mulberry32(CLOUDS.seed)`, **nunca `Math.random`**: PageFlip desmonta el canvas al voltear la página y con random las nubes saltarían de sitio al volver al mapa.
+- La silueta sale de una distancia con signo (tres lóbulos con base plana) mordida por un noise de valor de dos octavas; el recorte usa `fwidth` sobre la distancia, así el borde queda de un píxel a cualquier zoom sin blur ni alpha test binario. Los dos `#include` del final son obligatorios, igual que en el mar.
+
 ## 9. Notas de implementación (buenas prácticas para cambios)
 
 - **Nunca mutar GLTF cacheado**: siempre clonar nodos (ya hecho). Si añades lógica que modifique `object` geometry/material fuera del cleanup, tener cuidado.
@@ -165,5 +199,9 @@ Sombras: `LIGHT.shadow` + `castShadow/receiveShadow`. Bias negativo para evitar 
 | Añadir nueva región | GLB + PNGs + `constants.js` (`REGION_MESHES` + añadir texture a imports) | Nombre nodo debe coincidir exactamente. |
 | Cambiar posición inicial/centro | `WORLD.center`, `CAMERA.startDistance` | `fitDistance` puede sobrescribir distancia inicial si no tocado. |
 | Cambiar el look del mar (color, franjas, espuma, velocidad) | `constants.js` → `WATER`, y `waterShader.js` para el dibujo | `bands` alto = menos cartoon; `drop` sube el agua (o la aleja del slab). |
+| Cambiar el color del borde de una región | `constants.js` → `REGION_MESHES[].outline` | Un tono saturado del color del mapa: se lee como tinta política. |
+| Cambiar el look de la luz toon | `constants.js` → `TOON.bands` / `TOON.edgeSoftness` y `TEXTURE.emissive.intensity` | `bands <= 1` desactiva el parche; `emissiveIntensity` alto lava la sombra. |
+| Cambiar el borde (grosor, filtro, opacidad) | `constants.js` → `OUTLINE`, `regionOutline.js` para el filtro | `threshold` sube = menos aristas; `band` sube = entra el bisel del slab. |
+| Cambiar el número/tamaño/deriva de las nubes | `constants.js` → `CLOUDS` (+ `CLOUDS_EDGE`/`CLOUDS_DEPTH`), y `cloudShader.js` para la silueta | Pocas a propósito: `CLOUDS_EDGE` las mantiene detrás de la isla. Mover `height` cambia cuántas entran en cuadro (ver la fórmula de la sección I). |
 
-**Conclusión:** El mapa es un sistema acoplado (GLB + constantes + rig + springs + shader de mar + lazy-load + PageFlip). Para aplicar cambios, modifica **constantes primero** (datos/config), luego ajusta **lógica específica** (hooks/framing) solo si cambian matemáticas. Siempre respeta: clonado de nodos GLTF, integrador con subpasos, proyección sobre plano fijo, `frameloop` por visibilidad y reduced motion.
+**Conclusión:** El mapa es un sistema acoplado (GLB + constantes + rig + springs + shader de mar + shader de nubes + parche toon del material + bordes de región + lazy-load + PageFlip). Para aplicar cambios, modifica **constantes primero** (datos/config), luego ajusta **lógica específica** (hooks/framing/shaders) solo si cambian matemáticas. Siempre respeta: clonado de nodos GLTF, integrador con subpasos, proyección sobre plano fijo, `frameloop` por visibilidad y reduced motion.
