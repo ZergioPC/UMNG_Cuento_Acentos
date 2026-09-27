@@ -11,16 +11,26 @@ const GROUND = new THREE.Plane(
   -WORLD.groundY
 );
 
-// [x, z] por código de tecla. Arriba aleja del observador (-Z).
+// [x, z] por código de tecla: cuánto se mueve el punto que mira la cámara.
+//
+// Ojo con el signo, que es contraintuitivo. El eje derecha de la cámara es el
+// +X del mundo, así que mover la cámara a la +X empuja el contenido a la
+// IZQUIERDA de la pantalla. Para que el mapa vaya a la derecha hay que mover
+// la cámara a la -X. Igual en el eje vertical: con el pitch a 45° el eje
+// arriba de la pantalla es (0, cos, -sin), así que para subir el mapa hay que
+// llevar la cámara hacia +Z (hacia el observador).
+//
+// Estos signos son los que hacen que el mapa siga a la tecla, igual que
+// sigue al dedo en el arrastre.
 const KEY_STEPS = {
-  ArrowLeft: [-1, 0],
-  KeyA: [-1, 0],
-  ArrowRight: [1, 0],
-  KeyD: [1, 0],
+  ArrowLeft: [1, 0],
+  KeyA: [1, 0],
+  ArrowRight: [-1, 0],
+  KeyD: [-1, 0],
   ArrowUp: [0, -1],
-  KeyW: [0, -1],
+  KeyW: [0, 1],
   ArrowDown: [0, 1],
-  KeyS: [0, 1],
+  KeyS: [0, -1],
 };
 
 // Deja la cámara en el punto inicial antes del primer render: si esperáramos
@@ -110,10 +120,14 @@ function useFlightCamera() {
       const point = project(event.clientX, event.clientY);
       if (point === null) return;
 
-      // El punto agarrado se mantiene bajo el dedo: la cámara suma el mismo
-      // desplazamiento que hizo el punto del suelo.
-      rig.targetX = originX + (point.x - origin.x);
-      rig.targetZ = originZ + (point.z - origin.z);
+      // El punto agarrado se mantiene bajo el dedo, así que la cámara va al
+      // CONTRARIO de lo que se movió ese punto: si el dedo va a la derecha el
+      // punto del suelo bajo él también (su X crece) y para que ese punto
+      // siga bajo el dedo la cámara retrocede hacia -X, con lo cual el mapa se
+      // desliza a la derecha. Con el signo contrario el mapa salía al revés
+      // que el dedo, y no cuadraba con las flechas.
+      rig.targetX = originX - (point.x - origin.x);
+      rig.targetZ = originZ - (point.z - origin.z);
       clampTarget(rig);
     }
 

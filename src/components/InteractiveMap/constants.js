@@ -90,7 +90,7 @@ export const TEXTURE = {
 
 export const ANIM = {
   // Oscilación en reposo: seno con desfase por región.
-  idleAmplitude: 0.035,
+  idleAmplitude: 0.01,
   idleSpeed: 1.6,
   phaseStep: 1.3,
   // Alturas que persigue el resorte. La región ya elegida se queda arriba.
