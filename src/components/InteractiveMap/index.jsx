@@ -4,6 +4,7 @@ import { useGLTF, useTexture } from "@react-three/drei";
 
 import { BaseMesh } from "./BaseMesh";
 import { RegionMesh } from "./RegionMesh";
+import { WaterBackground } from "./WaterBackground";
 import { useFlightCamera } from "./useFlightCamera";
 import { useReducedMotion } from "./useReducedMotion";
 import {
@@ -85,6 +86,10 @@ function MapContents({ regions, activeRegion, onSelect, onHover }) {
         shadow-camera-far={LIGHT.shadow.far}
         shadow-bias={LIGHT.shadow.bias}
       />
+
+      {/* El mar va primero para que quede de fondo; el orden de dibujo lo
+          resuelve la profundidad, porque el plano está más abajo. */}
+      <WaterBackground bases={bases} />
 
       {bases.map((node) => (
         <BaseMesh key={node.name} object={node.object} texture={node.texture} />

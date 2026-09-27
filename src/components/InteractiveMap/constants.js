@@ -65,6 +65,42 @@ export const WORLD = {
   fitMargin: 1.12,
 };
 
+// Mar de fondo: un plano grande puesto por debajo de la base del GLB, con un
+// shader cartoon (ver waterShader.js). El mapa queda como una isla y el agua
+// se ve alrededor.
+export const WATER = {
+  // A 16 de distancia y con el pitch a 45° el encuadre más ancho resuelve
+  // ~6 unidades, así que 80 deja mar hasta el borde en cualquier posición de
+  // la cámara.
+  size: 80,
+  // Separación entre el fondo de la base y la superficie del mar. El nivel se
+  // saca del Box3 real de las bases, así que esto es holgura y no altura
+  // absoluta: el agua nunca queda por encima del slab.
+  drop: 0.12,
+  // Semiejes de la isla para deformar la costa. Un 62% del ancho/entrada del
+  // modelo: lo justo para que la orilla y los rompientes caigan en el agua y
+  // no sobre el mapa. Colombia es larga en Z, así que la costa no puede ser
+  // un círculo: se usa una elipse.
+  island: {
+    x: (WORLD.model.maxX - WORLD.model.minX) * 0.62,
+    z: (WORLD.model.maxZ - WORLD.model.minZ) * 0.62,
+  },
+  // Rango de "cercanía a la costa" en unidades de elipse (1 = borde de la
+  // isla): dentro de `near` el agua es clara, fuera de `far` es profunda.
+  shore: { near: 0.75, far: 1.35 },
+  deep: "#14609f",
+  shallow: "#78d9e6",
+  foam: "#f4fdff",
+  // Franjas de color del oleaje. 4 escalones se lee como pintado a brocha
+  // gorda; más y se ve degradado, menos y se ve escalonado.
+  bands: 4,
+  // Cuánta espuma (crestas + rompientes) y cuánto brillan los destellos.
+  foamStrength: 0.55,
+  sparkle: 0.35,
+  // Multiplicador del tiempo del shader.
+  speed: 1,
+};
+
 export const CONTROLS = {
   // Suavizado exponencial: 1 - e^(-damping·dt)
   focusDamping: 12,
