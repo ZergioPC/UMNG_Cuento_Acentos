@@ -17,3 +17,4 @@ App para comparar frases de diferentes cuentos. El usuario escoge un cuento, y l
 Tener un enfoque Mobile-First
 
 > !important NO EJECUTAR SCRIPTS SIN AUTORIZACION
+> Solo lint y build

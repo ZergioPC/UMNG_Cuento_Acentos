@@ -35,7 +35,13 @@ function buildSettings(width, height) {
   };
 }
 
-function PageFlipBook({ ref, children, startPage = 0, onPageChange }) {
+function PageFlipBook({
+  ref,
+  children,
+  startPage = 0,
+  densities = [],
+  onPageChange,
+}) {
   const hostRef = useRef(null);
   const flipRef = useRef(null);
   const pagesRef = useRef(null);
@@ -170,9 +176,18 @@ function PageFlipBook({ ref, children, startPage = 0, onPageChange }) {
       {Children.map(children, (child, index) => (
         // data-density define la animación: "soft" dobla la página con un
         // clip-path poligonal (tipo curled), "hard" la rota plana en 3D.
-        // "soft" clona el nodo en cada volteo, por eso el contenido debe ser
-        // declarativo y sin refs.
-        <div key={index} className="book-page" data-density="soft">
+        // page-flip lee el atributo una sola vez, en loadFromHTML.
+        //
+        // "soft" hace this.element.cloneNode(true) en cada volteo, y un clon
+        // de <canvas> sale sin bitmap ni contexto WebGL: durante el volteo se
+        // vería un rectángulo negro. Las páginas con 3D van como "hard", que no
+        // clona y solo rota. Sin entrada en densities queda "soft", que es lo
+        // que page-flip hace con un dataset vacío.
+        <div
+          key={index}
+          className="book-page"
+          data-density={densities[index] ?? "soft"}
+        >
           {child}
         </div>
       ))}

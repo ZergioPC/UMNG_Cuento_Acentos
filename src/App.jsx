@@ -16,6 +16,10 @@ const PAGE = {
   CUENTO: 3,
 };
 
+// "soft" clona la página para doblarla y un clon de <canvas> saldría en
+// blanco, así que la del mapa va "hard" (rotación plana, sin clonar).
+const PAGE_DENSITIES = ["soft", "soft", "hard", "soft"];
+
 function App() {
   const [cuento, setCuento] = useState(null);
   const [region, setRegion] = useState(null);
@@ -42,7 +46,11 @@ function App() {
   }
 
   return (
-    <PageFlipBook ref={book} onPageChange={handlePageChange}>
+    <PageFlipBook
+      ref={book}
+      densities={PAGE_DENSITIES}
+      onPageChange={handlePageChange}
+    >
       <HomeScene onStart={handleStart} />
 
       <SelectCuentoScene
