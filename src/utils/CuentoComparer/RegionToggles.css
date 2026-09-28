@@ -1,0 +1,36 @@
+.region-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.region-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.region-toggle__label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  opacity: 0.85;
+}
+
+.btn-toggle.region-toggle__btn svg {
+  width: 60%;
+  height: 60%;
+}
+
+@media (min-width: 576px) {
+  .region-toggles {
+    gap: 1.25rem 2rem;
+  }
+
+  .region-toggle__label {
+    font-size: 1rem;
+  }
+}

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { REGIONS, REGION_LABELS } from "../../db";
+import { BtnAnim } from "../../components/BtnAnim";
+import { BtnToggle } from "../../components/BtnToggle";
 import { FraseComponent } from "./FraseComponent";
-import { VIEW_ORDER } from "./constants";
+import { REGION_ICONS, REGION_PALETTES, VIEW_ORDER } from "./constants";
 import { playClip, resolveClip, stop, useAudioState } from "../audio";
+import "./RegionToggles.css";
 
 function CuentoComparer({ cuento }) {
   const [visible, setVisible] = useState(
@@ -21,22 +24,34 @@ function CuentoComparer({ cuento }) {
     >
       <h2 className="text-center mb-4">{cuento.title}</h2>
 
-      <div className="d-flex flex-wrap justify-content-center gap-3 mb-4">
-        {REGIONS.map((region) => (
-          <div key={region} className="form-check form-switch">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              role="switch"
-              id={`switch-${region}`}
-              checked={visible[region]}
-              onChange={() => toggleRegion(region)}
-            />
-            <label className="form-check-label" htmlFor={`switch-${region}`}>
-              {REGION_LABELS[region]}
-            </label>
-          </div>
-        ))}
+      <div className="region-toggles">
+        {REGIONS.map((region) => {
+          const palette = REGION_PALETTES[region];
+          const Icon = REGION_ICONS[region] ?? null;
+
+          return (
+            <div key={region} className="region-toggle">
+              <BtnToggle
+                active={visible[region]}
+                onChange={() => toggleRegion(region)}
+                color={palette.border}
+                size={64}
+                shadowSize={6}
+                borderRadius={18}
+                square
+                className="region-toggle__btn"
+                aria-label={`${
+                  visible[region] ? "Ocultar" : "Mostrar"
+                } frases de la región ${REGION_LABELS[region]}`}
+              >
+                {Icon && <Icon color="#fff" />}
+              </BtnToggle>
+              <span className="region-toggle__label">
+                {REGION_LABELS[region]}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       <div className="d-flex flex-column gap-3">
@@ -60,9 +75,16 @@ function CuentoComparer({ cuento }) {
       </div>
 
       <div className="d-flex justify-content-center mt-4">
-        <button className="btn btn-outline-light btn-sm" onClick={stop}>
+        <BtnAnim
+          color="#e94b4b"
+          size="sm"
+          shadowSize={5}
+          borderRadius={16}
+          onClick={stop}
+          padding={10}
+        >
           Detener audio
-        </button>
+        </BtnAnim>
       </div>
     </article>
   );

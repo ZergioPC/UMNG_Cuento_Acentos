@@ -1,0 +1,33 @@
+.btn-toggle {
+  transition:
+    filter 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.btn-toggle--off {
+  filter: grayscale(1);
+  opacity: 0.65;
+}
+
+.btn-toggle--off:hover {
+  filter: grayscale(0.6);
+  opacity: 0.85;
+}
+
+.btn-toggle--off:active {
+  filter: grayscale(1);
+  opacity: 0.65;
+}
+
+.btn-toggle:disabled {
+  cursor: not-allowed;
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.btn-toggle:disabled:active {
+  transform: none;
+  box-shadow: 0 var(--btn-shadow) 0 var(--btn-shadow-color);
+}
