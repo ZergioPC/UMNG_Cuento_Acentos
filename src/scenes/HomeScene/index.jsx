@@ -9,7 +9,8 @@ function HomeScene({ onStart }) {
       <Papel />
 
       <div className="d-flex flex-column align-items-center justify-content-center gap-4 h-100 overflow-auto p-3 text-center">
-        <h1>Proyecto de Integración Multimedia</h1>
+        <h1>Cuento Acentos</h1>
+        <span>Proyecto de Clase. Integración Multimedia</span>
         <BtnAnim 
           size="lg" 
           padding={10}
