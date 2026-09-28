@@ -1,9 +1,11 @@
+// src/utils/CuentoComparer/FraseComponent.jsx
 import { BtnAnim } from "../../components/BtnAnim";
 import { REGION_PALETTES, REGION_ICONS } from "./constants";
+import Sound from "../../assets/icons/sound";
 
 function FraseComponent({ region, frase, audioUrl, isActive, onPlay }) {
   const palette = REGION_PALETTES[region];
-  const icon = REGION_ICONS[region] ?? "NN";
+  const Icon = REGION_ICONS[region] ?? null;
 
   return (
     <div
@@ -14,17 +16,20 @@ function FraseComponent({ region, frase, audioUrl, isActive, onPlay }) {
       }}
     >
       <div className="col-auto d-flex flex-column align-items-center gap-2">
-        <span aria-hidden="true">{icon}</span>
+        <span aria-hidden="true">
+          {Icon ? <Icon size={24} color={palette.border} /> : "NN"}
+        </span>
         <BtnAnim
           color={palette.border}
-          size="sm"
+          size="md"
           shadowSize={6}
           borderRadius={16}
-          square={true}
+          square={false}
           aria-label={`Escuchar la frase en ${region}`}
           onClick={() => onPlay(audioUrl)}
+          padding={6}
         >
-          {isActive ? "⏹" : "🔊"}
+          <Sound size={16} color="#fff" />
         </BtnAnim>
       </div>
       <div className="col">
