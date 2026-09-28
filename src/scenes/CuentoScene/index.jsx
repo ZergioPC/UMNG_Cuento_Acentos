@@ -4,7 +4,7 @@ import { CuentoComparer } from "../../utils/CuentoComparer";
 
 import { BtnSimple } from "../../components/BtnSimple";
 
-import ArrowBack from "../../assets/icons/ArrowBack";
+import BackSign from "../../assets/icons/back_sign";
 import User1 from "../../assets/icons/user1";
 import User2 from "../../assets/icons/user2";
 import User3 from "../../assets/icons/user3";
@@ -29,7 +29,7 @@ function CuentoScene({ cuento, region, onBack }) {
       <Papel />
 
       <div className="d-flex align-items-center gap-3">
-        <BtnSimple icon={ArrowBack} onClick={onBack}>
+        <BtnSimple icon={BackSign} onClick={onBack}>
           Volver
         </BtnSimple>
       </div>

@@ -4,7 +4,7 @@ import { BtnAnim } from "../../components/BtnAnim";
 import { BtnSimple } from "../../components/BtnSimple";
 import { Papel } from "../../utils/fondo/Papel";
 
-import ArrowBack from "../../assets/icons/ArrowBack";
+import BackSign from "../../assets/icons/back_sign";
 
 // La sección solo ancla el fondo; el scroll va en el div de contenido, para
 // que el papel no se vaya con la lista al desplazar.
@@ -14,7 +14,7 @@ function SelectCuentoScene({ onSelect, onBack }) {
       <Papel />
 
       <div className="d-flex flex-column align-items-center gap-4 h-100 overflow-auto p-3">
-        <BtnSimple icon={ArrowBack} onClick={onBack}>
+        <BtnSimple icon={BackSign} onClick={onBack}>
           Volver
         </BtnSimple>
 

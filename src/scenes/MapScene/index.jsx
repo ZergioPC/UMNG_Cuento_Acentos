@@ -4,7 +4,7 @@ import { REGIONS } from "../../db";
 
 import { BtnSimple } from "../../components/BtnSimple";
 
-import ArrowBack from "../../assets/icons/ArrowBack";
+import BackSign from "../../assets/icons/back_sign";
 
 import "./MapScene.css";
 
@@ -35,7 +35,7 @@ function MapScene({ cuento, region, onSelectRegion, onBack }) {
       </Suspense>
 
       <header className="map-scene__bar">
-        <BtnSimple icon={ArrowBack} onClick={onBack} />
+        <BtnSimple icon={BackSign} onClick={onBack} />
         <h1 className="map-scene__title">{cuento.title}</h1>
       </header>
     </section>
