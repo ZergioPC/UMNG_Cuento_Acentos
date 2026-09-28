@@ -44,11 +44,8 @@ function CuentoComparer({ cuento }) {
                   visible[region] ? "Ocultar" : "Mostrar"
                 } frases de la región ${REGION_LABELS[region]}`}
               >
-                {Icon && <Icon color="#fff" />}
+                {Icon && <Icon color="#ffffff" />}
               </BtnToggle>
-              <span className="region-toggle__label">
-                {REGION_LABELS[region]}
-              </span>
             </div>
           );
         })}
