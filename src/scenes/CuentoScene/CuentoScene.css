@@ -1,0 +1,104 @@
+.cuento-scene__switch {
+  --cuento-gap: 4px;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 220px;
+  min-height: 48px;
+  margin-inline: auto;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
+}
+
+.cuento-scene__switch:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.cuento-scene__switch:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* El cuadro que se desplaza. El `left` se anima en vez de un transform
+   porque los porcentajes de un translateX se resolverían contra el ancho
+   del propio cuadro y no contra el del carril. */
+.cuento-scene__switch-thumb {
+  position: absolute;
+  top: var(--cuento-gap);
+  bottom: var(--cuento-gap);
+  left: var(--cuento-gap);
+  width: calc(50% - var(--cuento-gap) - var(--cuento-gap) / 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #000;
+  border-radius: 999px;
+  transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cuento-scene__switch--on .cuento-scene__switch-thumb {
+  left: calc(50% + var(--cuento-gap) / 2);
+}
+
+/* Los iconos solo existen visualmente dentro del cuadro que se desplaza. */
+.cuento-scene__switch-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  line-height: 0;
+}
+
+.cuento-scene__switch-icon {
+  display: block;
+  /* El ancho sale de la relación de aspecto intrínseca del viewBox. */
+  width: auto;
+  height: 30px;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+.cuento-scene__switch-icon--on {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* El primero acompaña siempre al cuento, así que no entra ni sale. */
+.cuento-scene__switch-icon--static {
+  opacity: 1;
+  transform: scale(1);
+  transition: none;
+}
+
+/* Escalonado: cada usuario aparece (y desaparece) 120 ms después del anterior. */
+.cuento-scene__switch-icon:nth-child(2) {
+  transition-delay: 120ms;
+}
+
+.cuento-scene__switch-icon:nth-child(3) {
+  transition-delay: 240ms;
+}
+
+.cuento-scene--reduced .cuento-scene__switch,
+.cuento-scene--reduced .cuento-scene__switch * {
+  transition: none;
+}
+
+@media (min-width: 480px) {
+  .cuento-scene__switch {
+    max-width: 260px;
+    min-height: 56px;
+  }
+
+  .cuento-scene__switch-icon {
+    height: 38px;
+  }
+}

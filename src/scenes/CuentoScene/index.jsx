@@ -5,45 +5,66 @@ import { CuentoComparer } from "../../utils/CuentoComparer";
 import { BtnSimple } from "../../components/BtnSimple";
 
 import ArrowBack from "../../assets/icons/ArrowBack";
+import User1 from "../../assets/icons/user1";
+import User2 from "../../assets/icons/user2";
+import User3 from "../../assets/icons/user3";
 
-const VIEWS = [
-  { key: "lectura", label: "Cuento" },
-  { key: "comparar", label: "Comparar" },
-];
+import { useReducedMotion } from "../../hooks/useReducedMotion";
+
+import "./CuentoScene.css";
 
 function CuentoScene({ cuento, region, onBack }) {
-  const [view, setView] = useState("lectura");
+  const [isCompare, setIsCompare] = useState(false);
+  const reduced = useReducedMotion();
 
   if (!cuento || !region) return null;
 
   return (
-    <section className="d-flex flex-column gap-3 h-100 overflow-hidden p-3">
+    <section
+      className={`cuento-scene d-flex flex-column gap-3 h-100 overflow-hidden p-3${
+        reduced ? " cuento-scene--reduced" : ""
+      }`}
+    >
       <div className="d-flex align-items-center gap-3">
         <BtnSimple icon={ArrowBack} onClick={onBack}>
           Volver
         </BtnSimple>
       </div>
 
-      <div className="btn-group w-100" role="group" aria-label="Vista">
-        {VIEWS.map(({ key, label }) => (
-          <button
-            key={key}
-            type="button"
-            className={`btn btn-lg ${
-              view === key ? "btn-light" : "btn-outline-light"
-            }`}
-            onClick={() => setView(key)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={isCompare}
+        aria-label="Comparar"
+        title="Comparar"
+        className={`cuento-scene__switch${
+          isCompare ? " cuento-scene__switch--on" : ""
+        }`}
+        onClick={() => setIsCompare((prev) => !prev)}
+      >
+        <span className="cuento-scene__switch-thumb" aria-hidden="true">
+          <span className="cuento-scene__switch-icons">
+            {/* El primero está siempre: no se apaga nunca al cambiar de estado. */}
+            <User2
+              className={`cuento-scene__switch-icon${
+                isCompare ? " cuento-scene__switch-icon--on" : ""
+              }`}
+            />
+            <User1 className="cuento-scene__switch-icon cuento-scene__switch-icon--static" />
+            <User3
+              className={`cuento-scene__switch-icon${
+                isCompare ? " cuento-scene__switch-icon--on" : ""
+              }`}
+            />
+          </span>
+        </span>
+      </button>
 
       <div className="flex-grow-1" style={{ overflowY: "auto", minHeight: 0 }}>
-        {view === "lectura" ? (
-          <CuentoReader cuento={cuento} region={region} />
-        ) : (
+        {isCompare ? (
           <CuentoComparer cuento={cuento} />
+        ) : (
+          <CuentoReader cuento={cuento} region={region} />
         )}
       </div>
     </section>
