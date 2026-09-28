@@ -10,6 +10,7 @@ import User2 from "../../assets/icons/user2";
 import User3 from "../../assets/icons/user3";
 
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { Papel } from "../../utils/fondo/Papel";
 
 import "./CuentoScene.css";
 
@@ -21,10 +22,12 @@ function CuentoScene({ cuento, region, onBack }) {
 
   return (
     <section
-      className={`cuento-scene d-flex flex-column gap-3 h-100 overflow-hidden p-3${
+      className={`cuento-scene position-relative d-flex flex-column gap-3 h-100 overflow-hidden p-3${
         reduced ? " cuento-scene--reduced" : ""
       }`}
     >
+      <Papel />
+
       <div className="d-flex align-items-center gap-3">
         <BtnSimple icon={ArrowBack} onClick={onBack}>
           Volver

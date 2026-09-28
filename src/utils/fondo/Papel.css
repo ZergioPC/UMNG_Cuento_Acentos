@@ -1,0 +1,15 @@
+/* Capa de fondo que cubre el 100% del padre. inset: 0 la pega a los cuatro
+   bordes de la caja del padre sin importar si este cambia de tamaño, y
+   background-size: 100% 100% deforma la imagen hasta llenarla: no mantiene
+   la proporción ni recorta, que es lo que pide un fondo de papel. */
+.papel {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url("../../assets/fondos/fondo_papel.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  user-select: none;
+}
