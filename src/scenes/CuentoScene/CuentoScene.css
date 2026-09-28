@@ -1,5 +1,15 @@
+/* Misma estética que BtnAnim: color sólido, labio oscuro abajo, radio 28 y
+   presión al pulsar. Los valores por defecto son los de .btn-blue. */
 .cuento-scene__switch {
+  --cuento-color: #2bb0fd;
+  --cuento-shadow-color: #1e7bb1;
+  --cuento-shadow: 6px;
+  --cuento-radius: 28px;
   --cuento-gap: 4px;
+  /* Tinta de los iconos sobre el cuadro blanco. El azul claro sobre blanco
+     se queda en 2.4:1, por debajo del 3:1 que pide WCAG para gráficos con
+     significado; este shade llega a 4.6:1. */
+  --cuento-ink: #1e7bb1;
 
   position: relative;
   display: flex;
@@ -8,15 +18,22 @@
   max-width: 220px;
   min-height: 48px;
   margin-inline: auto;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 999px;
+
+  background-color: var(--cuento-color);
+  color: #fff;
+  border: none;
+  border-radius: var(--cuento-radius);
+  box-shadow: 0 var(--cuento-shadow) 0 var(--cuento-shadow-color);
+  cursor: pointer;
+  outline: none;
+
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.2s ease;
+  transition: all 0.1s ease;
 }
 
-.cuento-scene__switch:hover {
-  background: rgba(255, 255, 255, 0.14);
+.cuento-scene__switch:active {
+  transform: translateY(calc(var(--cuento-shadow) * 0.5));
+  box-shadow: 0 calc(var(--cuento-shadow) * 0.5) 0 var(--cuento-shadow-color);
 }
 
 .cuento-scene__switch:focus-visible {
@@ -37,8 +54,8 @@
   align-items: center;
   justify-content: center;
   background: #fff;
-  color: #000;
-  border-radius: 999px;
+  color: var(--cuento-ink);
+  border-radius: var(--cuento-radius);
   transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -78,12 +95,14 @@
   transition: none;
 }
 
-/* Escalonado: cada usuario aparece (y desaparece) 120 ms después del anterior. */
-.cuento-scene__switch-icon:nth-child(2) {
+/* Escalonado: cada usuario aparece (y desaparece) 120 ms después del
+   anterior. Va en clases y no en :nth-child para que reordenar los iconos
+   no rompa la cascada. */
+.cuento-scene__switch-icon--step1 {
   transition-delay: 120ms;
 }
 
-.cuento-scene__switch-icon:nth-child(3) {
+.cuento-scene__switch-icon--step2 {
   transition-delay: 240ms;
 }
 

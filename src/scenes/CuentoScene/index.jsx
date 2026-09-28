@@ -44,15 +44,15 @@ function CuentoScene({ cuento, region, onBack }) {
       >
         <span className="cuento-scene__switch-thumb" aria-hidden="true">
           <span className="cuento-scene__switch-icons">
-            {/* El primero está siempre: no se apaga nunca al cambiar de estado. */}
+            {/* User1 acompaña siempre al cuento, así que no entra ni sale. */}
             <User2
-              className={`cuento-scene__switch-icon${
+              className={`cuento-scene__switch-icon cuento-scene__switch-icon--step1${
                 isCompare ? " cuento-scene__switch-icon--on" : ""
               }`}
             />
             <User1 className="cuento-scene__switch-icon cuento-scene__switch-icon--static" />
             <User3
-              className={`cuento-scene__switch-icon${
+              className={`cuento-scene__switch-icon cuento-scene__switch-icon--step2${
                 isCompare ? " cuento-scene__switch-icon--on" : ""
               }`}
             />
