@@ -226,7 +226,7 @@ export const TEXTURE = {
 // REGION_MESHES[].outline, que hoy es el mismo negro para las cinco.
 export const OUTLINE = {
   // Grosor en píxeles (Line2 los cuenta en pantalla, no en unidades de mundo).
-  lineWidth: 1.5,
+  lineWidth: 0.0,
   // Ángulo de dihedral mínimo (grados) para que una arista sea borde. Con 25
   // solo entran los quiebres de verdad: la costa, el bisel y las paredes del
   // slab. Las aristas coplanares del interior de la cara se descartan solas.

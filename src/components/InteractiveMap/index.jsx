@@ -118,7 +118,9 @@ function MapContents({ regions, activeRegion, onSelect, onHover }) {
           color={node.color}
           // El node.key null también hace de "nada elegido": sin esta guarda
           // Amazonia salía en alto como activa con region === null.
-          isActive={node.key !== null && activeRegion === node.key}
+          
+          //isActive={node.key !== null && activeRegion === node.key}
+          isActive={false}
           rig={rig}
           onSelect={onSelect}
           onHover={onHover}
