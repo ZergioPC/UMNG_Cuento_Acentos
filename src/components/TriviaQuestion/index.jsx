@@ -4,7 +4,6 @@ import {
   REGION_PALETTES,
 } from "../../utils/CuentoComparer/constants";
 import { TriviaHeader } from "../TriviaHeader";
-import { TriviaVariants } from "../TriviaVariants";
 
 const TYPE_LABELS = {
   region: "¿De qué región?",
@@ -21,12 +20,10 @@ function TriviaQuestion({
   question,
   answered,
   onAnswer,
-  onNext,
   onExit,
   index,
   total,
   score,
-  isLast,
 }) {
   const chosenId = answered?.chosenId ?? null;
   const isAnswered = answered !== null;
@@ -146,42 +143,6 @@ function TriviaQuestion({
             );
           })}
         </div>
-
-        {isAnswered && (
-          <div
-            className={`trivia-feedback${
-              answered.correct
-                ? " trivia-feedback--ok"
-                : " trivia-feedback--ko"
-            }`}
-          >
-            <p className="trivia-feedback__title">
-              {answered.correct ? "¡Correcto!" : "No era esa."}
-            </p>
-            <p className="trivia-feedback__text">{question.explanation}</p>
-
-            <TriviaVariants
-              variants={question.variants}
-              highlightRegion={question.highlightRegion}
-            />
-          </div>
-        )}
-
-        {isAnswered && (
-          <div className="trivia-actions">
-            <BtnAnim
-              size="md"
-              padding={12}
-              borderRadius={12}
-              color={CORRECT_COLOR}
-              onClick={onNext}
-              autoFocus
-              className="trivia-next"
-            >
-              {isLast ? "Ver resultados" : "Siguiente"}
-            </BtnAnim>
-          </div>
-        )}
       </article>
     </div>
   );

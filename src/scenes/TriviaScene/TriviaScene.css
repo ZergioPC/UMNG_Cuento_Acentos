@@ -300,39 +300,76 @@
   transform: none;
 }
 
-/* Retroalimentación */
-.trivia-feedback {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  border: 1px solid;
-  border-radius: 0.75rem;
+/* Retroalimentación: hoja que sube desde abajo y se superpone a la pregunta,
+   así no empuja el contenido ni obliga a desplazarse. Se queda montada y solo
+   cambia a "is-active": montarla al responder hacía saltar el scroll. */
+.trivia-sheet {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  max-height: 78%;
+  color: #160b07;
+  background-color: #f2e8dd;
+  border-top: 4px solid #2bb0fd;
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 -10px 30px rgba(22, 11, 7, 0.3);
+  visibility: hidden;
+  transform: translateY(100%);
 }
 
-.trivia-feedback--ok {
-  background-color: rgba(46, 158, 91, 0.14);
-  border-color: #2e9e5b;
+/* Solo animamos la entrada: al avanzar, la hoja se oculta de golpe para no
+   mostrar por un instante la explicación de la pregunta siguiente. */
+.trivia-sheet.is-active {
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    transform 0.22s ease-out,
+    visibility 0.22s ease-out;
 }
 
-.trivia-feedback--ko {
-  background-color: rgba(233, 75, 75, 0.14);
-  border-color: #e94b4b;
+.trivia-sheet--ok {
+  border-top-color: #2e9e5b;
+}
+
+.trivia-sheet--ko {
+  border-top-color: #e94b4b;
+}
+
+.trivia-sheet__scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.9rem 1rem 0;
+}
+
+.trivia-sheet__actions {
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem;
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  background-color: #f2e8dd;
 }
 
 .trivia-feedback__title {
   margin: 0 0 0.25rem;
   font-family: "Phudu";
-  font-size: 1.05rem;
+  font-size: 1.15rem;
+}
+
+.trivia-feedback--ok .trivia-feedback__title {
+  color: #237a46;
+}
+
+.trivia-feedback--ko .trivia-feedback__title {
+  color: #b33636;
 }
 
 .trivia-feedback__text {
   margin: 0;
   line-height: 1.45;
-}
-
-.trivia-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 0.75rem;
 }
 
 .trivia-next.btn-blue {
@@ -571,5 +608,11 @@
 .trivia-scene--reduced *::before,
 .trivia-scene--reduced *::after {
   animation: none;
+  transition: none;
+}
+
+/* La regla de arriba pierde contra .trivia-sheet.is-active por especificidad:
+   sin movimiento la hoja debe aparecer de golpe. */
+.trivia-scene--reduced .trivia-sheet.is-active {
   transition: none;
 }

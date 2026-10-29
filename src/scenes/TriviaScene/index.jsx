@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Papel } from "../../utils/fondo/Papel";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
@@ -12,8 +12,10 @@ import {
 } from "./score";
 import { TriviaIntro } from "../../components/TriviaIntro";
 import { TriviaQuestion } from "../../components/TriviaQuestion";
+import { TriviaFeedback } from "../../components/TriviaFeedback";
 import { TriviaResult } from "../../components/TriviaResult";
 import { TriviaRanking } from "../../components/TriviaRanking";
+import { BtnAnim } from "../../components/BtnAnim";
 import "./TriviaScene.css";
 
 function TriviaScene({ onBack }) {
@@ -31,11 +33,31 @@ function TriviaScene({ onBack }) {
   const startedAtRef = useRef(0);
   const questionStartRef = useRef(0);
   const finishedRef = useRef(false);
+  const sheetRef = useRef(null);
 
   const canStart = isValidName(name);
   const current = game?.questions[index] ?? null;
   const answered = answers[index] ?? null;
   const score = answers.filter((answer) => answer.correct).length;
+  const sheetClass = [
+    "trivia-sheet",
+    answered ? "is-active" : "",
+    answered ? (answered.correct ? "trivia-sheet--ok" : "trivia-sheet--ko") : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  // Llevar el foco al botón sin arrastrar el scroll: el foco nativo (autoFocus)
+  // hacía que la página saltara hacia abajo justo al abrir la hoja. Se busca el
+  // botón dentro de la hoja para no depender de la ref de BtnAnim. Como la hoja
+  // ya no se desmonta, también se reinicia su scroll interno en cada respuesta.
+  useEffect(() => {
+    if (phase !== "playing" || !answered) return;
+
+    const sheet = sheetRef.current;
+    sheet?.querySelector(".trivia-sheet__scroll")?.scrollTo({ top: 0 });
+    sheet?.querySelector(".trivia-next")?.focus({ preventScroll: true });
+  }, [phase, answered]);
 
   function resetGame() {
     setGame(null);
@@ -155,12 +177,10 @@ function TriviaScene({ onBack }) {
             question={current}
             answered={answered}
             onAnswer={handleAnswer}
-            onNext={handleNext}
             onExit={exitTrivia}
             index={index}
             total={game.questions.length}
             score={score}
-            isLast={index === game.questions.length - 1}
           />
         )}
 
@@ -182,6 +202,32 @@ function TriviaScene({ onBack }) {
           />
         )}
       </div>
+
+      {/* La hoja vive siempre mientras se juega y solo cambia de clase. Si se
+          montara al responder, el navegador recalculaba el layout y saltaba el
+          scroll. */}
+      {phase === "playing" && current && (
+        <div className={sheetClass} aria-hidden={!answered} ref={sheetRef}>
+          <div className="trivia-sheet__scroll">
+            <TriviaFeedback question={current} answered={answered} />
+          </div>
+
+          <div className="trivia-sheet__actions">
+            <BtnAnim
+              size="md"
+              padding={12}
+              borderRadius={12}
+              color="#2e9e5b"
+              onClick={handleNext}
+              className="trivia-next"
+            >
+              {index === game.questions.length - 1
+                ? "Ver resultados"
+                : "Siguiente"}
+            </BtnAnim>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
