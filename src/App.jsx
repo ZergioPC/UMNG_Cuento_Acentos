@@ -28,7 +28,7 @@ function App() {
   const book = useRef(null);
 
   function handlePageChange(index, previous) {
-    if (previous === PAGE.CUENTO) stopAudio();
+    if (previous === PAGE.CUENTO || previous === PAGE.TRIVIA) stopAudio();
     book.current?.resetScroll(index);
   }
 
@@ -62,8 +62,6 @@ function App() {
         onTrivia={handleTrivia}
       />
 
-      <TriviaScene />
-
       <SelectCuentoScene
         onSelect={handlePickCuento}
         onBack={() => book.current?.goTo(PAGE.HOME)}
@@ -81,6 +79,8 @@ function App() {
         region={region}
         onBack={() => book.current?.goTo(PAGE.MAP)}
       />
+
+      <TriviaScene onBack={() => book.current?.goTo(PAGE.HOME)} />
     </PageFlipBook>
   );
 }
