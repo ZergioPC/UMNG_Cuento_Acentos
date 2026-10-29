@@ -1,5 +1,5 @@
-import { BtnSimple } from "../../../components/BtnSimple";
-import BackSign from "../../../assets/icons/back_sign";
+import { BtnSimple } from "../BtnSimple";
+import BackSign from "../../assets/icons/back_sign";
 
 function TriviaHeader({ title, onBack, backLabel = "Volver" }) {
   return (

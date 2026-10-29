@@ -1,10 +1,10 @@
-import { BtnAnim } from "../../../components/BtnAnim";
+import { BtnAnim } from "../BtnAnim";
 import {
   REGION_ICONS,
   REGION_PALETTES,
-} from "../../../utils/CuentoComparer/constants";
-import { TriviaHeader } from "./TriviaHeader";
-import { TriviaVariants } from "./TriviaVariants";
+} from "../../utils/CuentoComparer/constants";
+import { TriviaHeader } from "../TriviaHeader";
+import { TriviaVariants } from "../TriviaVariants";
 
 const TYPE_LABELS = {
   region: "¿De qué región?",

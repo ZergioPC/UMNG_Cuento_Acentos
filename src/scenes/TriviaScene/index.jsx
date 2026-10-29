@@ -10,10 +10,10 @@ import {
   normalizeName,
   saveRanking,
 } from "./score";
-import { TriviaIntro } from "./components/TriviaIntro";
-import { TriviaQuestion } from "./components/TriviaQuestion";
-import { TriviaResult } from "./components/TriviaResult";
-import { TriviaRanking } from "./components/TriviaRanking";
+import { TriviaIntro } from "../../components/TriviaIntro";
+import { TriviaQuestion } from "../../components/TriviaQuestion";
+import { TriviaResult } from "../../components/TriviaResult";
+import { TriviaRanking } from "../../components/TriviaRanking";
 import "./TriviaScene.css";
 
 function TriviaScene({ onBack }) {

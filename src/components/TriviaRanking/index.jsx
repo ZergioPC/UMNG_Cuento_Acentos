@@ -1,5 +1,5 @@
-import { TriviaHeader } from "./TriviaHeader";
-import { TriviaRankingList } from "./TriviaRankingList";
+import { TriviaHeader } from "../TriviaHeader";
+import { TriviaRankingList } from "../TriviaRankingList";
 
 function TriviaRanking({ ranking, onBack, highlightId }) {
   return (

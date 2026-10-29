@@ -1,6 +1,6 @@
-import { BtnAnim } from "../../../components/BtnAnim";
-import { NAME_MAX } from "../score";
-import { TriviaHeader } from "./TriviaHeader";
+import { BtnAnim } from "../BtnAnim";
+import { NAME_MAX } from "../../scenes/TriviaScene/score";
+import { TriviaHeader } from "../TriviaHeader";
 
 function TriviaIntro({
   name,

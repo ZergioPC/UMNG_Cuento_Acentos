@@ -1,8 +1,8 @@
-import { REGIONS, REGION_LABELS } from "../../../db";
+import { REGIONS, REGION_LABELS } from "../../db";
 import {
   REGION_ICONS,
   REGION_PALETTES,
-} from "../../../utils/CuentoComparer/constants";
+} from "../../utils/CuentoComparer/constants";
 
 function TriviaVariants({ variants, highlightRegion }) {
   return (

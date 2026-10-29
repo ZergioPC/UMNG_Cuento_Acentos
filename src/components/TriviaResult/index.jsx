@@ -1,7 +1,7 @@
-import { BtnAnim } from "../../../components/BtnAnim";
-import { MAX_ENTRIES } from "../score";
-import { TriviaHeader } from "./TriviaHeader";
-import { TriviaRankingList } from "./TriviaRankingList";
+import { BtnAnim } from "../BtnAnim";
+import { MAX_ENTRIES } from "../../scenes/TriviaScene/score";
+import { TriviaHeader } from "../TriviaHeader";
+import { TriviaRankingList } from "../TriviaRankingList";
 
 const TIERS = [
   {
