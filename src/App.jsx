@@ -8,17 +8,19 @@ import { CuentoScene } from "./scenes/CuentoScene";
 
 import { PageFlipBook } from "./utils/Transitions/PageFlipBook";
 import { stop as stopAudio } from "./utils/audio";
+import { TriviaScene } from "./scenes/TriviaScene";
 
 const PAGE = {
   HOME: 0,
   SELECT: 1,
   MAP: 2,
   CUENTO: 3,
+  TRIVIA: 4,
 };
 
 // "soft" clona la página para doblarla y un clon de <canvas> saldría en
 // blanco, así que la del mapa va "hard" (rotación plana, sin clonar).
-const PAGE_DENSITIES = ["soft", "soft", "hard", "soft"];
+const PAGE_DENSITIES = ["soft", "soft", "hard", "soft", "soft"];
 
 function App() {
   const [cuento, setCuento] = useState(null);
@@ -26,12 +28,16 @@ function App() {
   const book = useRef(null);
 
   function handlePageChange(index, previous) {
-    if (previous === PAGE.CUENTO) stopAudio();
+    if (previous === PAGE.CUENTO || previous === PAGE.TRIVIA) stopAudio();
     book.current?.resetScroll(index);
   }
 
   function handleStart() {
     book.current?.goTo(PAGE.SELECT);
+  }
+
+  function handleTrivia() {
+    book.current?.goTo(PAGE.TRIVIA);
   }
 
   function handlePickCuento(selected) {
@@ -51,7 +57,10 @@ function App() {
       densities={PAGE_DENSITIES}
       onPageChange={handlePageChange}
     >
-      <HomeScene onStart={handleStart} />
+      <HomeScene 
+        onStart={handleStart} 
+        onTrivia={handleTrivia}
+      />
 
       <SelectCuentoScene
         onSelect={handlePickCuento}
@@ -70,6 +79,8 @@ function App() {
         region={region}
         onBack={() => book.current?.goTo(PAGE.MAP)}
       />
+
+      <TriviaScene onBack={() => book.current?.goTo(PAGE.HOME)} />
     </PageFlipBook>
   );
 }

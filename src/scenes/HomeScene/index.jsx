@@ -3,7 +3,7 @@ import { Papel } from "../../utils/fondo/Papel";
 
 // La sección solo ancla el fondo; el scroll va en el div de contenido, para
 // que el papel no se vaya con el texto al desplazar.
-function HomeScene({ onStart }) {
+function HomeScene({ onStart, onTrivia }) {
   return (
     <section className="position-relative h-100 overflow-hidden">
       <Papel />
@@ -18,6 +18,15 @@ function HomeScene({ onStart }) {
           onClick={onStart}
         >
           Seleccionar cuento
+        </BtnAnim>
+
+        <BtnAnim 
+          size="lg" 
+          padding={10}
+          borderRadius={10}
+          onClick={onTrivia}
+        >
+          Trivia de Acentos
         </BtnAnim>
       </div>
     </section>
