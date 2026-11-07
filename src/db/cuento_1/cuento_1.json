@@ -36,23 +36,17 @@
     {
       "id": 4,
       "content": {
-        "andina": "Sonaba lejos, pero de pronto lo oyó ahí, detrás de él.",
-        "caribe": "Sonaba lejos, pero de pronto lo sintió ahí mismito, detrás de él. Salió corriendo y no paró hasta llegar a su casa.",
-        "orinoquia": "Sonaba lejos, pero de pronto lo oyó ahí mismito, detrás de él. Se le paró el pelo y salió corriendo a la carrera hacia su casa, sin voltear a mirar."
+        "andina": "Sonaba lejos, pero de pronto lo oyó ahí, detrás de él, y salió a la carrera hasta la casa.",
+        "caribe": "Sonaba lejos, pero de pronto lo sintió ahí mismisimo, detrás de él. Salió corriendo y no paró hasta llegar a su casa.",
+        "orinoquia": "Sonaba lejos, pero de repente lo oyó ahí, detrás de él. Se le paró el pelo y salió corriendo a la carrera hacia su casa."
       }
     },
     {
       "id": 5,
       "content": {
-        "andina": "-¡Ay, juepucha! -gritó, y salió a la carrera hasta la casa.",
+        "andina": "Desde entonces los abuelos dicen: \"Mijito, si escucha ese silbido, ni se le ocurra averiguar. Hágale derecho para la casa, no más\".",
         "caribe": "Desde entonces la abuela le dice a cualquiera: \"Mijo, si oyes ese silbido, no te pongas a averiguar. Vete derechito pa' la casa\".",
         "orinoquia": "Por eso dicen los abuelos: \"Mijo, si oye ese silbido, no se ponga a averiguar. Siga derechito pa' su casa\"."
-      }
-    },
-    {
-      "id": 6,
-      "content": {
-        "andina": "Desde entonces los abuelos dicen: \"Mijito, si escucha ese silbido, ni se le ocurra averiguar. Hágale derecho para la casa, no más\"."
       }
     }
   ]
