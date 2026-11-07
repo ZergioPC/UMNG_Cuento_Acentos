@@ -1,0 +1,30 @@
+.frase-component {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.75rem;
+  background-color: var(--frase-bg);
+  border: 1px solid var(--frase-border);
+  color: var(--frase-color);
+  transition: box-shadow 0.2s ease;
+}
+
+.frase-component--active {
+  box-shadow: 0 0 0 3px var(--frase-border);
+}
+
+.frase-component__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.frase-component__text {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}

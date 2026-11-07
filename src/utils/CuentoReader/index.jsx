@@ -1,46 +1,77 @@
 import { useEffect } from "react";
-import { playSequence, stop, useAudioState } from "../audio";
+import { REGION_LABELS } from "../../db";
+import {
+  playFrase,
+  playSequence,
+  resolveClip,
+  stop,
+  useAudioState,
+} from "../audio";
 import { BtnAnim } from "../../components/BtnAnim";
+import { AudioButton } from "../../components/AudioButton";
+import "./CuentoReader.css";
 
 function CuentoReader({ cuento, region }) {
-  const { playing } = useAudioState();
+  const { current, playing } = useAudioState();
 
   useEffect(() => () => stop(), []);
 
+  // Las frases finales de algunos cuentos solo existen en una región. Sin este
+  // filtro se renderizaría un <p> vacío y el índice de audio no coincidiría.
+  const frases = cuento.frases.filter((frase) => Boolean(frase.content[region]));
+  const hasAudio = frases.some((frase) =>
+    Boolean(resolveClip(cuento, frase.id, region))
+  );
+
   return (
-    <article
-      className="w-100 mx-auto p-4 rounded-4 bg-white bg-opacity-10"
-      style={{ maxWidth: 720 }}
-    >
+    <article className="cuento-reader">
       <h2 className="text-center mb-4">{cuento.title}</h2>
 
-      <div className="d-flex justify-content-center gap-3 mb-4">
+      <div className="cuento-reader__actions">
         <BtnAnim
           padding={10}
           borderRadius={10}
-          onClick={() =>
-            playSequence(
-              cuento.folder,
-              region,
-              cuento.frases.map((frase) => frase.id)
-            )
-          }
+          disabled={!hasAudio}
+          onClick={() => playSequence(cuento, region)}
         >
           ▶ Escuchar
         </BtnAnim>
         {playing && (
-          <BtnAnim color="#e74c3c" onClick={stop}>
+          <BtnAnim
+            color="#e74c3c"
+            padding={10}
+            borderRadius={10}
+            onClick={stop}
+          >
             ⏹ Detener
           </BtnAnim>
         )}
       </div>
 
-      <ul className="list-unstyled d-flex flex-column gap-3 m-0">
-        {cuento.frases.map((frase) => (
-          <li key={frase.id}>
-            <p className="lh-base m-0">{frase.content[region]}</p>
-          </li>
-        ))}
+      <ul className="cuento-reader__list list-unstyled m-0">
+        {frases.map((frase) => {
+          const hasClip = Boolean(resolveClip(cuento, frase.id, region));
+          const isActive =
+            current?.fraseId === frase.id && current?.region === region;
+
+          return (
+            <li
+              key={frase.id}
+              className={`cuento-reader__frase${
+                isActive ? " cuento-reader__frase--active" : ""
+              }`}
+            >
+              {hasClip && (
+                <AudioButton
+                  active={isActive && playing}
+                  label={`la frase ${frase.id + 1} en ${REGION_LABELS[region]}`}
+                  onClick={() => playFrase(cuento, frase, region)}
+                />
+              )}
+              <p className="cuento-reader__text">{frase.content[region]}</p>
+            </li>
+          );
+        })}
       </ul>
     </article>
   );

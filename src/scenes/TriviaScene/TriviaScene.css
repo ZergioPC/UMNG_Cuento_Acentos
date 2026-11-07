@@ -410,19 +410,19 @@
   box-shadow: 0 0 0 2px var(--variant-border);
 }
 
-.trivia-variants__row[data-region="paisa"] {
+.trivia-variants__row[data-region="andina"] {
   --variant-bg: #fdf3d8;
   --variant-border: #ff9f22;
   --variant-ink: #8d5f09;
 }
 
-.trivia-variants__row[data-region="rolo"] {
+.trivia-variants__row[data-region="orinoquia"] {
   --variant-bg: #d9f2e4;
   --variant-border: #67c73b;
   --variant-ink: #233d0b;
 }
 
-.trivia-variants__row[data-region="costeño"] {
+.trivia-variants__row[data-region="caribe"] {
   --variant-bg: #fde2e2;
   --variant-border: #dcd935;
   --variant-ink: #4a490d;

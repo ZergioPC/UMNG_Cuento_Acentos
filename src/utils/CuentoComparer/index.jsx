@@ -4,24 +4,22 @@ import { BtnAnim } from "../../components/BtnAnim";
 import { BtnToggle } from "../../components/BtnToggle";
 import { FraseComponent } from "./FraseComponent";
 import { REGION_ICONS, REGION_PALETTES, VIEW_ORDER } from "./constants";
-import { playClip, resolveClip, stop, useAudioState } from "../audio";
+import { playFrase, resolveClip, stop, useAudioState } from "../audio";
 import "./RegionToggles.css";
+import "./CuentoComparer.css";
 
 function CuentoComparer({ cuento }) {
   const [visible, setVisible] = useState(
     Object.fromEntries(REGIONS.map((region) => [region, true]))
   );
-  const { url } = useAudioState();
+  const { current, playing } = useAudioState();
 
   function toggleRegion(region) {
     setVisible((prev) => ({ ...prev, [region]: !prev[region] }));
   }
 
   return (
-    <article
-      className="w-100 mx-auto p-4 rounded-4 bg-white bg-opacity-10"
-      style={{ maxWidth: 720 }}
-    >
+    <article className="cuento-comparer">
       <h2 className="text-center mb-4">{cuento.title}</h2>
 
       <div className="region-toggles">
@@ -52,37 +50,50 @@ function CuentoComparer({ cuento }) {
       </div>
 
       <div className="d-flex flex-column gap-3">
-        {cuento.frases.map((frase) => (
-          <div key={frase.id}>
-            {VIEW_ORDER.map(
-              (region) =>
-                visible[region] && (
+        {cuento.frases.map((frase) => {
+          const variants = VIEW_ORDER.filter(
+            (region) => visible[region] && Boolean(frase.content[region])
+          );
+
+          if (variants.length === 0) return null;
+
+          return (
+            <div key={frase.id}>
+              {variants.map((region) => {
+                const isActive =
+                  current?.fraseId === frase.id && current?.region === region;
+
+                return (
                   <FraseComponent
                     key={region}
                     region={region}
                     frase={frase.content[region]}
-                    audioUrl={resolveClip(cuento.folder, frase.id, region)}
-                    isActive={url === resolveClip(cuento.folder, frase.id, region)}
-                    onPlay={(audioUrl) => playClip(audioUrl)}
+                    label={`la frase ${frase.id + 1} en ${REGION_LABELS[region]}`}
+                    audioUrl={resolveClip(cuento, frase.id, region)}
+                    isActive={isActive && playing}
+                    onPlay={() => playFrase(cuento, frase, region)}
                   />
-                )
-            )}
-          </div>
-        ))}
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
 
-      <div className="d-flex justify-content-center mt-4">
-        <BtnAnim
-          color="#e94b4b"
-          size="sm"
-          shadowSize={5}
-          borderRadius={16}
-          onClick={stop}
-          padding={10}
-        >
-          Detener audio
-        </BtnAnim>
-      </div>
+      {playing && (
+        <div className="cuento-comparer__actions">
+          <BtnAnim
+            color="#e94b4b"
+            size="sm"
+            shadowSize={5}
+            borderRadius={16}
+            onClick={stop}
+            padding={10}
+          >
+            Detener audio
+          </BtnAnim>
+        </div>
+      )}
     </article>
   );
 }

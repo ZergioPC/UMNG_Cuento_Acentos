@@ -28,22 +28,22 @@ const OUTLINE_COLOR = "#000000";
 export const REGION_MESHES = [
   {
     name: "Caribe",
-    key: "costeño",
-    label: "Costeño",
+    key: "caribe",
+    label: "Caribe",
     texture: caribeUrl,
     outline: OUTLINE_COLOR,
   },
   {
     name: "Andes",
-    key: "paisa",
-    label: "Paisa",
+    key: "andina",
+    label: "Andina",
     texture: andinaUrl,
     outline: OUTLINE_COLOR,
   },
   {
     name: "Orinoquia",
-    key: "rolo",
-    label: "Rolo",
+    key: "orinoquia",
+    label: "Orinoquia",
     texture: orinquiaUrl,
     outline: OUTLINE_COLOR,
   },

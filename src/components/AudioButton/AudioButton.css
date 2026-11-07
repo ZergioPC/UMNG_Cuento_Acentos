@@ -1,0 +1,8 @@
+.audio-button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.audio-button--active {
+  filter: brightness(0.85);
+}

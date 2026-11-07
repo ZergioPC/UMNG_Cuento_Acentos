@@ -1,0 +1,48 @@
+.cuento-reader {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cuento-reader__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.cuento-reader__actions .btn-blue:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cuento-reader__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cuento-reader__frase {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  transition: background-color 0.2s ease;
+}
+
+.cuento-reader__frase--active {
+  background-color: rgba(43, 176, 253, 0.22);
+}
+
+.cuento-reader__text {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}

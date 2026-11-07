@@ -41,11 +41,14 @@ function baseQuestion(cuento, frase, highlightRegion) {
 }
 
 // La frase mostrada solo se puede asignar a una región si su texto no se repite
-// en las otras dos. Las frases idénticas en varias regiones no sirven para
-// opción múltiple.
+// en las otras regiones que sí tienen texto. Las frases idénticas en varias
+// regiones no sirven para opción múltiple y las regiones sin texto no cuentan.
 function isUniqueVariant(variants, region) {
   return REGIONS.every(
-    (other) => other === region || variants[other] !== variants[region]
+    (other) =>
+      other === region ||
+      !variants[other] ||
+      variants[other] !== variants[region]
   );
 }
 
@@ -122,16 +125,24 @@ function buildPools() {
   for (const cuento of CUENTOS) {
     for (const frase of cuento.frases) {
       const variants = frase.content;
-      const distinct = new Set(REGIONS.map((value) => variants[value])).size;
+      // Varias frases finales solo existen en una región. Las preguntas se
+      // generan únicamente con las variantes que tienen texto.
+      const available = REGIONS.filter((value) => Boolean(variants[value]));
+      const distinct = new Set(available.map((value) => variants[value])).size;
       const varied = distinct > 1;
 
-      if (distinct === 3) {
+      // "Encuentra la frase" muestra las tres variantes: solo tiene sentido si
+      // existen las tres y son distintas.
+      if (
+        available.length === REGIONS.length &&
+        distinct === REGIONS.length
+      ) {
         for (const value of REGIONS) {
           regionMatch.push(makeRegionMatchQuestion(cuento, frase, value));
         }
       }
 
-      for (const shown of REGIONS) {
+      for (const shown of available) {
         if (isUniqueVariant(variants, shown)) {
           region.push(makeRegionQuestion(cuento, frase, shown));
         }
@@ -142,7 +153,7 @@ function buildPools() {
 
         // Una falsa por cada región cuyo texto sea distinto: así el pool tiene
         // variedad y ninguna afirmación falsa puede ser también verdadera.
-        for (const claimed of REGIONS) {
+        for (const claimed of available) {
           if (claimed !== shown && variants[claimed] !== variants[shown]) {
             trueFalse.push(
               makeTrueFalseQuestion(cuento, frase, shown, claimed)
@@ -227,9 +238,9 @@ function buildGame(size = QUIZ_SIZE) {
   return shuffle(picked).slice(0, size);
 }
 
-// Extensión futura de audio: cuando existan los mp3 con la convención
-// src/db/<cuento>/audio/<fraseId>_<region>.mp3, agregar acá un generador que
-// llame a resolveClip() y una cuota de tipo "audio" en MIX. El resto de la
-// trivia (puntaje, ranking y navegación) no necesita cambios.
+// Extensión futura de audio: cuando se integre la trivia con audio, agregar acá
+// un generador que llame a resolveClip(cuento, frase.id, region) y una cuota de
+// tipo "audio" en MIX. Los mp3 viven en
+// src/assets/audio/<audioFolder>/<region>_<n>.mp3 (n = frase.id + 1).
 
 export { QUIZ_SIZE, buildGame };

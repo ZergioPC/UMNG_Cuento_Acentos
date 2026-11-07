@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CuentoReader } from "../../utils/CuentoReader";
 import { CuentoComparer } from "../../utils/CuentoComparer";
+import { stop as stopAudio } from "../../utils/audio";
 
 import { BtnSimple } from "../../components/BtnSimple";
 
@@ -18,7 +19,18 @@ function CuentoScene({ cuento, region, onBack }) {
   const [isCompare, setIsCompare] = useState(false);
   const reduced = useReducedMotion();
 
+  // Al salir de la escena (aunque App también lo haga al cambiar de página) no
+  // debe quedar ningún audio sonando.
+  useEffect(() => () => stopAudio(), []);
+
   if (!cuento || !region) return null;
+
+  function handleToggleCompare() {
+    // Cambiar de lector a comparador cambia qué frases están visibles; el clip
+    // que estaba sonando ya no corresponde a la vista.
+    stopAudio();
+    setIsCompare((prev) => !prev);
+  }
 
   return (
     <section
@@ -43,7 +55,7 @@ function CuentoScene({ cuento, region, onBack }) {
         className={`cuento-scene__switch${
           isCompare ? " cuento-scene__switch--on" : ""
         }`}
-        onClick={() => setIsCompare((prev) => !prev)}
+        onClick={handleToggleCompare}
       >
         <span className="cuento-scene__switch-thumb" aria-hidden="true">
           <span className="cuento-scene__switch-icons">

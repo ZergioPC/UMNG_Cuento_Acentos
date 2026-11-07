@@ -10,7 +10,7 @@ function TriviaVariants({ variants, highlightRegion }) {
       <h3 className="trivia-variants__title">Así se dice en cada región</h3>
 
       <ul className="trivia-variants__list">
-        {REGIONS.map((region) => {
+        {REGIONS.filter((region) => Boolean(variants[region])).map((region) => {
           const Icon = REGION_ICONS[region] ?? null;
           const active = region === highlightRegion;
 
