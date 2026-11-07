@@ -44,31 +44,33 @@
     {
       "id": 5,
       "content": {
-        "andina": "Nadie respondió. Detrás de un árbol vio a un hombrecito con un sombrerote. Salió corriendo para la casa y le contó a su abuela:",
-        "caribe": "Nadie respondió. Detrás de un árbol vio a un sombrero grande. Salió corriendo pa' la casa y le contó todo a su abuela, que se rio:",
-        "orinoquia": "Nadie contestó. Detrás de un árbol vio a un hombrecito con un sombrero grande. Pegó la carrera pa' la casa y le contó todo a su abuela, que sonrió y le dijo:"
+        "andina": "Nadie respondió. Detrás de un árbol vio a un hombrecito con un sombrerote.",
+        "caribe": "Nadie respondió. Detrás de un árbol vio a un sombrero grande.",
+        "orinoquia": "Nadie contestó. Detrás de un árbol vio a un hombrecito con un sombrero grande."
       }
     },
     {
       "id": 6,
       "content": {
-        "andina": "-¡Abuela, vi un señor chiquitico con un sombrerote!",
-        "caribe": "-Ay, mija, ese fue el Duende.",
-        "orinoquia": "-Ay, mija, eso fue un Duende."
+        "andina": "Salió corriendo para la casa y le contó a su abuela:",
+        "caribe": "Salió corriendo pa' la casa y le contó todo a su abuela:",
+        "orinoquia": "Pegó la carrera pa' la casa y le contó todo a su abuela:"
       }
     },
     {
       "id": 7,
       "content": {
         "andina": "-Uy, mijita, ese fue el Duende.",
-        "caribe": "Desde ese día, la pelá siempre llegaba a la casa antes de que cayera la noche.",
-        "orinoquia": "Desde ese día, siempre llegaba a la casa antes de que cayera la noche."
+        "caribe": "-Ay, mija, ese fue el Duende.",
+        "orinoquia": "-Ay, mija, eso fue un Duende."
       }
     },
     {
       "id": 8,
       "content": {
-        "andina": "Desde ese día, la chinita siempre llegaba a la casa antes de que cayera la noche."
+        "andina": "Desde ese día, la chinita siempre llegaba a la casa antes de que cayera la noche.",
+        "caribe": "Desde ese día, la pelá siempre llegaba a la casa antes de que cayera la noche.",
+        "orinoquia": "Desde ese día, siempre llegaba a la casa antes de que cayera la noche."
       }
     }
   ]
