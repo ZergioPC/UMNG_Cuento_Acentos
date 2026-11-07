@@ -5,7 +5,7 @@
       "id": 0,
       "content": {
         "andina": "Una noche, un hombre caminaba por un camino solitario cuando vio a una mujer vestida de blanco.",
-        "caribe": "Una noche, un hombre caminaba por un camino solitario cuando vio a una mujer vestida de blanco.",
+        "caribe": "Una noche, un hombre caminaba solitario cuando vio a una mujer vestida de blanco.",
         "orinoquia": "Una noche, un hombre caminaba por la trocha cuando vio a una mujer vestida de blanco."
       }
     },
@@ -45,7 +45,7 @@
       "id": 5,
       "content": {
         "andina": "-¡Ay, Dios mío! ¡Uy, no!",
-        "caribe": "-¡Ay, mi madre! ¡Eche, qué susto!",
+        "caribe": "-¡Ay, mamá mia! ¡Qué susto!",
         "orinoquia": "-¡Dios Mio, Ave María purísima!"
       }
     },
@@ -60,23 +60,17 @@
     {
       "id": 7,
       "content": {
-        "andina": "-¡Abuela, sumercé no sabe lo que me pasó!",
-        "caribe": "-Mijo, tú te encontraste con la Sayona. Tuviste suerte, ombe.",
+        "andina": "-Mijo, usted se encontró con la Sayona. Qué bueno que no le pasó nada.",
+        "caribe": "-Mijo, tú te encontraste con la Sayona. Tuviste suerte pelao.",
         "orinoquia": "-Mijo, usted se topó con la Sayona. Tuvo suerte."
       }
     },
     {
       "id": 8,
       "content": {
-        "andina": "-Mijo, usted se encontró con la Sayona. Qué bueno que no le pasó nada.",
-        "caribe": "Desde entonces se dice en la costa: \"De noche, por esos caminos, mejor no te quedes\".",
+        "andina": "Desde entonces los abuelos dicen: \"De noche, por esos caminos, más bien no se quede\".",
+        "caribe": "Desde entonces se dice en la costa: \"De noche, no se pueden salir por esos caminos, mejor no quedate en tu casa\".",
         "orinoquia": "Desde entonces los mayores aconsejan: \"De noche, por esos caminos, mejor no se quede\"."
-      }
-    },
-    {
-      "id": 9,
-      "content": {
-        "andina": "Desde entonces los abuelos dicen: \"De noche, por esos caminos, más bien no se quede\"."
       }
     }
   ]
