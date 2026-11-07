@@ -29,8 +29,8 @@ const CUENTOS = [
   cuento_3,
   cuento_4,
   cuento_5,
-  cuento_6,
-  cuento_7,
+  //cuento_6,
+  //cuento_7,
 ].map((json, index) => buildCuento(json, `cuento_${index + 1}`));
 
 export { CUENTOS, REGIONS, REGION_LABELS };

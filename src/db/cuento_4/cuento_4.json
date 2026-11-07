@@ -1,36 +1,67 @@
-[
-  {
-    "title":"La lluvia inesperada"
-  },{
-    "id": 0,
-    "content": {
-      "costeño": "Tomás salió a jugar cuando el sol estaba brillante.",
-      "paisa": "Tomás salió a jugar cuando el sol estaba brillante.",
-      "rolo": "Tomás salió a jugar cuando el sol estaba brillante."
+{
+  "title": "El Carrao",
+  "dialogs": [
+    {
+      "id": 0,
+      "content": {
+        "andina": "Cuenta una vieja historia que un joven perdió a su papá cerca de un río.",
+        "caribe": "Cuenta una vieja historia que un joven perdió a su papá cerca de un río.",
+        "orinoquia": "Cuenta una vieja historia que un joven perdió a su papá cerca del río."
+      }
+    },
+    {
+      "id": 1,
+      "content": {
+        "andina": "Durante días lo buscó por las orillas:",
+        "caribe": "Durante días lo buscó por las orillas:",
+        "orinoquia": "Durante días lo buscó por la orilla:"
+      }
+    },
+    {
+      "id": 2,
+      "content": {
+        "andina": "-¡Papá! ¿Dónde está?",
+        "caribe": "-¡Papá! ¿Dónde tú estás?",
+        "orinoquia": "-¡Papá! ¡Papá! ¿Dónde estás?"
+      }
+    },
+    {
+      "id": 3,
+      "content": {
+        "andina": "Una tarde, descansando junto al río, escuchó el canto de un ave:",
+        "caribe": "Una tarde, descansando junto al río, escuchó el canto de un ave:",
+        "orinoquia": "Una tarde, descansando junto al río, oyó el canto de un ave:"
+      }
+    },
+    {
+      "id": 4,
+      "content": {
+        "andina": "-¡Carrao... carrao...!",
+        "caribe": "-¡Carrao... carrao...!",
+        "orinoquia": "Alzó la vista y vio al pájaro en un árbol. Desde ese día, cada vez que lo oía cantar, se acordaba de su papá."
+      }
+    },
+    {
+      "id": 5,
+      "content": {
+        "andina": "Levantó la mirada y vio al pájaro en un árbol. Desde ese día, cada vez que lo oía cantar, se acordaba de su papá.",
+        "caribe": "Por eso los abuelos dicen que el canto del carrao es nostalgia y recuerdo. Y cuando canta en la tarde, comentan:",
+        "orinoquia": "Por eso dicen los abuelos que el canto del carrao es nostalgia y recuerdo. Y cuando canta al atardecer, los llaneros comentan:"
+      }
+    },
+    {
+      "id": 6,
+      "content": {
+        "andina": "Por eso los abuelos dicen que el canto del carrao es nostalgia y recuerdo. Y cuando canta en la tarde, comentan:",
+        "caribe": "-Ese pajarito anda contando cuentos de los tiempos de antes, ombe.",
+        "orinoquia": "-Ese pajarito anda echando cuentos de la sabana, hombe."
+      }
+    },
+    {
+      "id": 7,
+      "content": {
+        "andina": "-Escuche ese pajarito, sumercé, parece que estuviera contando una historia."
+      }
     }
-  },
-  {
-    "id": 1,
-    "content": {
-      "costeño": "—¡Qué sol tan fuerte, compae!— dijo.",
-      "paisa": "—¡Hombre, qué día tan bueno!— dijo.",
-      "rolo": "—¡Qué día tan chévere!— dijo."
-    }
-  },
-  {
-    "id": 2,
-    "content": {
-      "costeño": "De repente, llegaron unas nubes oscuras y comenzó a llover.",
-      "paisa": "De repente, llegaron unas nubes oscuras y comenzó a llover.",
-      "rolo": "De repente, llegaron unas nubes oscuras y comenzó a llover."
-    }
-  },
-  {
-    "id": 3,
-    "content": {
-      "costeño": "Tomás corrió a la casa y dejó sus zapatos junto a la puerta para que se secaran.",
-      "paisa": "Tomás corrió a la casa y dejó sus zapatos junto a la puerta para que se secaran.",
-      "rolo": "Tomás corrió a la casa y dejó sus zapatos junto a la puerta para que se secaran."
-    }
-  }
-]
+  ]
+}

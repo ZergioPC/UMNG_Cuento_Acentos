@@ -1,36 +1,83 @@
-[
-  {
-    "title":"Una visita al mercado"
-  },{
-    "id": 0,
-    "content": {
-      "paisa": "Laura acompañó a su abuela al mercado.",
-      "rolo": "Laura acompañó a su abuela al mercado.",
-      "costeño": "Laura acompañó a su abuela al mercado."
+{
+  "title": "La Sayona",
+  "dialogs": [
+    {
+      "id": 0,
+      "content": {
+        "andina": "Una noche, un hombre caminaba por un camino solitario cuando vio a una mujer vestida de blanco.",
+        "caribe": "Una noche, un hombre caminaba por un camino solitario cuando vio a una mujer vestida de blanco.",
+        "orinoquia": "Una noche, un hombre caminaba por la trocha cuando vio a una mujer vestida de blanco."
+      }
+    },
+    {
+      "id": 1,
+      "content": {
+        "andina": "-Buenas noches, señora. ¿Se le perdió algo?",
+        "caribe": "-Buenas noches, señora. ¿Anda perdida?",
+        "orinoquia": "-Buenas noches, señora. ¿Anda perdida?"
+      }
+    },
+    {
+      "id": 2,
+      "content": {
+        "andina": "La mujer no respondió. Él siguió su camino, pero a los pocos pasos escuchó una voz detrás:",
+        "caribe": "La mujer no le respondió. Él siguió su camino, pero a los pocos pasos escuchó una voz detrás:",
+        "orinoquia": "La mujer no dijo ni pío. Él siguió su rumbo, pero a los pocos pasos oyó una voz por detrás:"
+      }
+    },
+    {
+      "id": 3,
+      "content": {
+        "andina": "-Espere...",
+        "caribe": "-Espere...",
+        "orinoquia": "-Espere..."
+      }
+    },
+    {
+      "id": 4,
+      "content": {
+        "andina": "Se dio la vuelta y la mujer ya no estaba.",
+        "caribe": "Se volteó y la mujer ya no estaba.",
+        "orinoquia": "Se volteó y la mujer ya no estaba."
+      }
+    },
+    {
+      "id": 5,
+      "content": {
+        "andina": "-¡Ay, Dios mío! ¡Uy, no!",
+        "caribe": "-¡Ay, mi madre! ¡Eche, qué susto!",
+        "orinoquia": "-¡Dios Mio, Ave María purísima!"
+      }
+    },
+    {
+      "id": 6,
+      "content": {
+        "andina": "Llegó a la casa volando y le contó todo a su abuela:",
+        "caribe": "Salió volao hasta la casa y le contó todo a su abuela, que le dijo:",
+        "orinoquia": "Llegó a la casa a la carrera y le contó todo a su abuela, que le dijo:"
+      }
+    },
+    {
+      "id": 7,
+      "content": {
+        "andina": "-¡Abuela, sumercé no sabe lo que me pasó!",
+        "caribe": "-Mijo, tú te encontraste con la Sayona. Tuviste suerte, ombe.",
+        "orinoquia": "-Mijo, usted se topó con la Sayona. Tuvo suerte."
+      }
+    },
+    {
+      "id": 8,
+      "content": {
+        "andina": "-Mijo, usted se encontró con la Sayona. Qué bueno que no le pasó nada.",
+        "caribe": "Desde entonces se dice en la costa: \"De noche, por esos caminos, mejor no te quedes\".",
+        "orinoquia": "Desde entonces los mayores aconsejan: \"De noche, por esos caminos, mejor no se quede\"."
+      }
+    },
+    {
+      "id": 9,
+      "content": {
+        "andina": "Desde entonces los abuelos dicen: \"De noche, por esos caminos, más bien no se quede\"."
+      }
     }
-  },
-  {
-    "id": 1,
-    "content": {
-      "paisa": "—Mija, escojamos unas frutas bien buenas— dijo la abuela.",
-      "rolo": "—Sumercé, ¿escogemos unas frutas?— preguntó Laura.",
-      "costeño": "—¡Ajá, abuela! Vamos a escoger unas frutas bien buenas— dijo."
-    }
-  },
-  {
-    "id": 2,
-    "content": {
-      "paisa": "Compraron frutas, pan y unas flores para la casa.",
-      "rolo": "Compraron frutas, pan y unas flores para la casa.",
-      "costeño": "Compraron frutas, pan y unas flores para la casa."
-    }
-  },
-  {
-    "id": 3,
-    "content": {
-      "paisa": "Mientras caminaban, Laura saludó a los vendedores y escogió una naranja grande y dulce.",
-      "rolo": "Mientras caminaban, Laura saludó a los vendedores y escogió una naranja grande y dulce.",
-      "costeño": "Mientras caminaban, Laura saludó a los vendedores y escogió una naranja grande y dulce."
-    }
-  }
-]
+  ]
+}

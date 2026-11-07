@@ -1,52 +1,59 @@
-[
-  {
-    "title":"La mañana de la escuela"
-  },{
-    "id": 0,
-    "content": {
-      "paisa": "—¡Quiubo, mijo! Ya es hora de ir para la escuela —dijo la mamá de Mateo.",
-      "rolo": "—¡Quiubo! Ya es hora de ir a la escuela —dijo la mamá de Mateo.",
-      "costeño": "—¡Ajá, pelao! Ya es hora de ir pa' la escuela —dijo la mamá de Mateo."
+{
+  "title": "El Silbón",
+  "dialogs": [
+    {
+      "id": 0,
+      "content": {
+        "andina": "Cuentan los abuelos que de noche, por los caminos solitarios, se oye un silbido.",
+        "caribe": "Cuentan los viejos de la costa que de noche, por los caminos solitarios, se oye un silbido.",
+        "orinoquia": "Cuentan los mayores que de noche, por la trocha solitaria, se oye un silbido."
+      }
+    },
+    {
+      "id": 1,
+      "content": {
+        "andina": "Un señor iba para su casa cuando lo escuchó:",
+        "caribe": "Un hombre volvía pa' su casa cuando lo escuchó:",
+        "orinoquia": "Un hombre volvía pa' su casa cuando lo escuchó:"
+      }
+    },
+    {
+      "id": 2,
+      "content": {
+        "andina": "-Fiuuu... fiuuu...",
+        "caribe": "-Fiuuu... fiuuu...",
+        "orinoquia": "-Fiuuu... fiuuu..."
+      }
+    },
+    {
+      "id": 3,
+      "content": {
+        "andina": "-Uy, ¿y eso qué será? -dijo, mirando para todos lados.",
+        "caribe": "-Ajá, ¿y eso qué e', ombe? -dijo, mirando pa' to' lados.",
+        "orinoquia": "-Hombe, ¿y eso qué será? -dijo, mirando pa' todos lados."
+      }
+    },
+    {
+      "id": 4,
+      "content": {
+        "andina": "Sonaba lejos, pero de pronto lo oyó ahí, detrás de él.",
+        "caribe": "Sonaba lejos, pero de pronto lo sintió ahí mismito, detrás de él. Salió corriendo y no paró hasta llegar a su casa.",
+        "orinoquia": "Sonaba lejos, pero de pronto lo oyó ahí mismito, detrás de él. Se le paró el pelo y salió corriendo a la carrera hacia su casa, sin voltear a mirar."
+      }
+    },
+    {
+      "id": 5,
+      "content": {
+        "andina": "-¡Ay, juepucha! -gritó, y salió a la carrera hasta la casa.",
+        "caribe": "Desde entonces la abuela le dice a cualquiera: \"Mijo, si oyes ese silbido, no te pongas a averiguar. Vete derechito pa' la casa\".",
+        "orinoquia": "Por eso dicen los abuelos: \"Mijo, si oye ese silbido, no se ponga a averiguar. Siga derechito pa' su casa\"."
+      }
+    },
+    {
+      "id": 6,
+      "content": {
+        "andina": "Desde entonces los abuelos dicen: \"Mijito, si escucha ese silbido, ni se le ocurra averiguar. Hágale derecho para la casa, no más\"."
+      }
     }
-  },
-  {
-    "id": 1,
-    "content": {
-      "paisa": "Mateo miró por la ventana y respondió:",
-      "rolo": "Mateo miró por la ventana y respondió:",
-      "costeño": "Mateo miró por la ventana y dijo:"
-    }
-  },
-  {
-    "id": 2,
-    "content": {
-      "paisa": "—Pues sí, mamá. ¡Qué mañana tan bonita! Ya voy.",
-      "rolo": "—¡De una! Qué mañana tan bonita. Ya voy.",
-      "costeño": "—¡Eche, qué mañana tan bonita! Ya voy."
-    }
-  },
-  {
-    "id": 3,
-    "content": {
-      "paisa": "Guardó sus cuadernos, tomó el desayuno y salió con su mochila.",
-      "rolo": "Guardó sus cuadernos, tomó el desayuno y salió con su mochila.",
-      "costeño": "Guardó sus cuadernos, tomó el desayuno y salió con su mochila."
-    }
-  },
-  {
-    "id": 4,
-    "content": {
-      "paisa": "En el camino saludó a su vecino:",
-      "rolo": "En el camino saludó a su vecino:",
-      "costeño": "En el camino saludó a su vecino:"
-    }
-  },
-  {
-    "id": 5,
-    "content": {
-      "paisa": "—¡Qué más, parce! ¡Nos vemos después!",
-      "rolo": "—¡Quiubo! ¿Todo bien? ¡Nos vemos después!",
-      "costeño": "—¡Ajá, compae! ¡Nos vemos después!"
-    }
-  }
-]
+  ]
+}
