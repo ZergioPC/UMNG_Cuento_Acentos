@@ -13,7 +13,7 @@
       "id": 1,
       "content": {
         "andina": "-Uy, ¿y eso qué será?",
-        "caribe": "-Ajá, ¿y eso qué será?",
+        "caribe": "-Ajá, ¿y esa vaina que es?",
         "orinoquia": "-Hombe, ¿y eso qué será?"
       }
     },
@@ -21,7 +21,7 @@
       "id": 2,
       "content": {
         "andina": "La luz se fue acercando y era una bola de fuego enorme, flotando en el aire.",
-        "caribe": "La luz se fue acercando y era una bola de fuego enorme, flotando en el aire.",
+        "caribe": "La luz se fue acercando y era una bola de fuego enorme, grandota, flotando en el aire.",
         "orinoquia": "La luz se fue acercando y era una bola de fuego enorme, flotando en el aire."
       }
     },
@@ -36,32 +36,24 @@
     {
       "id": 4,
       "content": {
-        "andina": "La bola lo siguió todo el camino. Apenas llegó a la casa, la luz desapareció.",
-        "caribe": "La bola lo siguió por todo el camino. Cuando llegó a la casa, la luz se esfumó.",
-        "orinoquia": "La bola lo siguió todo el camino. Cuando llegó a la casa, la luz se esfumó."
+        "andina": "La bola lo siguió todo el camino. Apenas llegó a la casa, la luz desapareció. Al otro día le contó a su abuelo, que le dijo:",
+        "caribe": "La bola lo siguió por todo el camino. Cuando llegó a la casa, la luz se esfumó. Al otro día le contó al abuelo, que le dijo:",
+        "orinoquia": "La bola lo siguió todo el camino. Cuando llegó a la casa, la luz se esfumó. Al otro día le contó todo a su abuelo, que le dijo:"
       }
     },
     {
       "id": 5,
       "content": {
-        "andina": "Al otro día le contó a su abuelo, que le dijo:",
-        "caribe": "Al otro día le contó al abuelo, que le dijo:",
-        "orinoquia": "Al otro día le contó todo a su abuelo, que le dijo:"
+        "andina": "-Eso fue la Bola de Fuego, mijo. Hay cosas que es mejor mirar de lejitos, ¿oyó?",
+        "caribe": "-Eso fue la Bola de Fuego, pelao, prestele atención, parele bola. Hay cosas que es mejor mirarlas de lejos.",
+        "orinoquia": "-Eso fue una Bola de Fuego, mijo. Hay vainas que es mejor mirar de lejitos."
       }
     },
     {
       "id": 6,
       "content": {
-        "andina": "-Eso fue la Bola de Fuego, mijo. Hay cosas que es mejor mirar de lejitos, ¿oyó?",
-        "caribe": "-Eso fue la Bola de Fuego, pelao. Hay cosas que es mejor mirarlas de lejitos.",
-        "orinoquia": "-Eso fue una Bola de Fuego, mijo. Hay vainas que es mejor mirar de lejitos."
-      }
-    },
-    {
-      "id": 7,
-      "content": {
         "andina": "Desde esa noche, el joven no volvió a andar solo de noche.",
-        "caribe": "Desde esa noche, el joven no volvió a andar solo de noche.",
+        "caribe": "Desde esa noche, el pelao no volvió a andar solo de noche.",
         "orinoquia": "Desde esa noche, el muchacho no volvió a andar solo en la noche."
       }
     }
