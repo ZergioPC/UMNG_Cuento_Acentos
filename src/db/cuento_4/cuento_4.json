@@ -4,21 +4,13 @@
     {
       "id": 0,
       "content": {
-        "andina": "Cuenta una vieja historia que un joven perdió a su papá cerca de un río.",
+        "andina": "Cuenta una vieja historia que un joven perdió a su papá cerca de un río. Durante días lo buscó por las orillas:",
         "caribe": "Cuenta una vieja historia que un joven perdió a su papá cerca de un río.",
-        "orinoquia": "Cuenta una vieja historia que un joven perdió a su papá cerca del río."
+        "orinoquia": "Cuenta una vieja historia que un joven perdió a su papá cerca del río. Durante días lo buscó por la orilla:"
       }
     },
     {
       "id": 1,
-      "content": {
-        "andina": "Durante días lo buscó por las orillas:",
-        "caribe": "Durante días lo buscó por las orillas:",
-        "orinoquia": "Durante días lo buscó por la orilla:"
-      }
-    },
-    {
-      "id": 2,
       "content": {
         "andina": "-¡Papá! ¿Dónde está?",
         "caribe": "-¡Papá! ¿Dónde tú estás?",
@@ -26,7 +18,7 @@
       }
     },
     {
-      "id": 3,
+      "id": 2,
       "content": {
         "andina": "Una tarde, descansando junto al río, escuchó el canto de un ave:",
         "caribe": "Una tarde, descansando junto al río, escuchó el canto de un ave:",
@@ -34,17 +26,25 @@
       }
     },
     {
-      "id": 4,
+      "id": 3,
       "content": {
         "andina": "-¡Carrao... carrao...!",
         "caribe": "-¡Carrao... carrao...!",
-        "orinoquia": "Alzó la vista y vio al pájaro en un árbol. Desde ese día, cada vez que lo oía cantar, se acordaba de su papá."
+        "orinoquia": "-¡Carrao... carrao...!"
+      }
+    },
+    {
+      "id": 4,
+      "content": {
+        "andina": "Levantó la mirada y vio al pájaro en un árbol. Desde ese día, cada vez que lo oía cantar, se acordaba de su papá.",
+        "caribe": "Levantó la mirada y el pájaro estaba en el arbol. Desde ese día, cada vez que lo oía cantar, se acordaba de su papá.",
+        "orinoquia": "Alzó la vista y vio al pájaro en un árbol. Desde ese día, cada vez que lo oía cantar, se acordaba de su papá."    
       }
     },
     {
       "id": 5,
       "content": {
-        "andina": "Levantó la mirada y vio al pájaro en un árbol. Desde ese día, cada vez que lo oía cantar, se acordaba de su papá.",
+        "andina": "Por eso los abuelos dicen que el canto del carrao es nostalgia y recuerdo. Y cuando canta en la tarde, comentan:",
         "caribe": "Por eso los abuelos dicen que el canto del carrao es nostalgia y recuerdo. Y cuando canta en la tarde, comentan:",
         "orinoquia": "Por eso dicen los abuelos que el canto del carrao es nostalgia y recuerdo. Y cuando canta al atardecer, los llaneros comentan:"
       }
@@ -52,15 +52,10 @@
     {
       "id": 6,
       "content": {
-        "andina": "Por eso los abuelos dicen que el canto del carrao es nostalgia y recuerdo. Y cuando canta en la tarde, comentan:",
+        "andina": "-Escuche ese pajarito, sumercé, parece que estuviera contando una historia.",
         "caribe": "-Ese pajarito anda contando cuentos de los tiempos de antes, ombe.",
         "orinoquia": "-Ese pajarito anda echando cuentos de la sabana, hombe."
-      }
-    },
-    {
-      "id": 7,
-      "content": {
-        "andina": "-Escuche ese pajarito, sumercé, parece que estuviera contando una historia."
+        
       }
     }
   ]
